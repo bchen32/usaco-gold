@@ -18,7 +18,7 @@ public class Angry {
 			cows.add(2L * Integer.parseInt(in.readLine()));
 		}
 		long maxRad = (cows.last() - cows.first()) / 2;
-		System.out.printf("%.1f\n", bSearch(0, maxRad, cows) / 2.0);
+		out.printf("%.1f\n", bSearch(0, maxRad, cows) / 2.0);
 		out.close();
 		in.close();
 	}
