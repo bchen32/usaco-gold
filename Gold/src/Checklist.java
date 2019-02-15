@@ -4,19 +4,19 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.HashMap;
 import java.util.StringTokenizer;
 
 public class Checklist {
-	
+
 	static Cow[] hCows;
 	static Cow[] gCows;
 	static int H;
 	static int G;
-	static HashMap<State, Integer> dp = new HashMap<State, Integer>();
+	static long[][][] dp;
 
 	public static void main(String[] args) throws IOException {
-//		BufferedReader in = new BufferedReader(new FileReader("C:\\Users\\bench\\git\\USACO-Gold\\Gold\\Checklist\\7.in"));
+		// BufferedReader in = new BufferedReader(new
+		// FileReader("C:\\Users\\bjchen\\git\\USACO-Gold\\Gold\\Checklist\\10.in"));
 		BufferedReader in = new BufferedReader(new FileReader("checklist.in"));
 		PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("checklist.out")));
 		StringTokenizer ln = new StringTokenizer(in.readLine());
@@ -24,7 +24,14 @@ public class Checklist {
 		G = Integer.parseInt(ln.nextToken());
 		hCows = new Cow[H];
 		gCows = new Cow[G];
-		
+		dp = new long[H + 1][G + 1][2];
+		for (int i = 0; i < H + 1; i++) {
+			for (int j = 0; j < G + 1; j++) {
+				for (int k = 0; k < 2; k++) {
+					dp[i][j][k] = -1;
+				}
+			}
+		}
 		for (int i = 0; i < H; i++) {
 			ln = new StringTokenizer(in.readLine());
 			hCows[i] = new Cow(Integer.parseInt(ln.nextToken()), Integer.parseInt(ln.nextToken()));
@@ -38,19 +45,18 @@ public class Checklist {
 		out.close();
 		in.close();
 	}
-	
-	static int calc(int h, int g, int energy, Cow prev, boolean isH) {
-		State toAdd = new State(h, g, isH);
+
+	static long calc(int h, int g, long energy, Cow prev, boolean isH) {
 		Cow curr = (isH) ? hCows[h] : gCows[g];
-		int distSq = (prev.x - curr.x) * (prev.x - curr.x) + (prev.y - curr.y) * (prev.y - curr.y);
+		long distSq = (prev.x - curr.x) * (prev.x - curr.x) + (prev.y - curr.y) * (prev.y - curr.y);
 		energy += distSq;
-		if (dp.containsKey(toAdd)) {
-			return dp.get(toAdd) + energy;
+		if (dp[h + 1][g + 1][((isH) ? 1 : 0)] != -1) {
+			return dp[h + 1][g + 1][((isH) ? 1 : 0)] + energy;
 		}
 		if (h == H - 1 && g == G - 1) {
 			return energy;
 		}
-		int ans;
+		long ans;
 		if (h == H - 2) {
 			if (g != G - 1) {
 				ans = calc(h, g + 1, energy, curr, false);
@@ -64,42 +70,14 @@ public class Checklist {
 				ans = Math.min(calc(h + 1, g, energy, curr, true), calc(h, g + 1, energy, curr, false));
 			}
 		}
-		dp.put(toAdd, ans - energy);
+		dp[h + 1][g + 1][((isH) ? 1 : 0)] = ans - energy;
 		return ans;
 	}
-	
-	static class State {
-		int h;
-		int g;
-		boolean isH;
-		
-		public State(int a, int b, boolean c) {
-			h = a;
-			g = b;
-			isH = c;
-		}
-		
-		@Override
-		public int hashCode() {
-			Boolean b = isH;
-			int hash = 7;
-			hash = 31 * hash + h;
-			hash = 31 * hash + g;
-			hash = 31 * hash + b.hashCode();
-			return hash;
-		}
-		
-		@Override
-		public boolean equals(Object o) {
-			State other = (State) o;
-			return this.h == other.h && this.g == other.g && this.isH == other.isH;
-		}
-	}
-	
+
 	static class Cow {
 		int x;
 		int y;
-		
+
 		public Cow(int a, int b) {
 			x = a;
 			y = b;
