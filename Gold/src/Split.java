@@ -5,35 +5,28 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Arrays;
-import java.util.Comparator;
 import java.util.StringTokenizer;
+import java.util.TreeMap;
 
 public class Split {
 	
 	public static void main(String[] args) throws IOException {
-		// BufferedReader in = new BufferedReader(new FileReader("C:\\Users\\bench\\git\\USACO-Gold\\Gold\\Split\\1.in"));
+		// BufferedReader in = new BufferedReader(new FileReader("C:\\Users\\bench\\git\\USACO-Gold\\Gold\\Split\\7.in"));
 		// BufferedReader in = new BufferedReader(new FileReader("H:\\git\\USACO-Gold\\Gold\\Split\\1.in"));
 		BufferedReader in = new BufferedReader(new FileReader("split.in"));
 		PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("split.out")));
 		StringTokenizer tk = new StringTokenizer(in.readLine());
 		int N = Integer.parseInt(tk.nextToken());
-		Node[] xLocs = new Node[N];
-		Node[] yLocs = new Node[N];
+		Node[] nodes = new Node[N];
 		for (int i = 0; i < N; i++) {
 			tk = new StringTokenizer(in.readLine());
 			int x = Integer.parseInt(tk.nextToken());
 			int y = Integer.parseInt(tk.nextToken());
-			Node toAdd = new Node(x, y);
-			xLocs[i] = toAdd;
-			yLocs[i] = toAdd;
+			nodes[i] = new Node(x, y);
 		}
-		Arrays.sort(xLocs, new CompareX());
-		Arrays.sort(yLocs, new CompareY());
-		int leftX = xLocs[0].x;
-		int bottomY = yLocs[0].y;
-		int rightX = xLocs[N - 1].x;
-		Solver ans = new Solver(N, xLocs, yLocs);
-		System.out.println(Math.min(ans.minArea(leftX, bottomY), ans.minArea(rightX, bottomY)));
+		Arrays.sort(nodes);
+		Solver ans = new Solver(N, nodes);
+		out.println(Math.max(ans.savedX(), ans.savedY()));
 		out.close();
 		in.close();
 	}
@@ -41,72 +34,76 @@ public class Split {
 
 class Solver {
 	private int N;
-	private Node[] xLocs;
-	private Node[] yLocs;
+	private Node[] nodes;
 	
-	public Solver(int N, Node[] xLocs, Node[] yLocs) {
+	public Solver(int N, Node[] nodes) {
 		this.N = N;
-		this.xLocs = xLocs;
-		this.yLocs = yLocs;
+		this.nodes = nodes;
 	}
 	
-	public int minArea(int minX, int minY) {
-		int w = 0;
-		int h = 0;
-		int currX = 0;
-		int currY = 0;
-		for (int i = 0; i < N; i++) {
-			Node tryX = xLocs[currX];
-			while (tryX.used) {
-				currX++;
-				tryX = xLocs[currX];
-			}
-			Node tryY = yLocs[currY];
-			while (tryY.used) {
-				currY++;
-				tryY = yLocs[currY];
-			}
-			int xArea = (w + Math.max(0, tryX.x)) * (h + Math.max(0, tryX.y));
-			int yArea = (w + Math.max(0, tryY.x)) * (h + Math.max(0, tryY.y));
-			if (xArea > yArea) {
-				
-			} else if (yArea < xArea) {
-				
-			}
+	public long savedX() {
+		TreeMap<Long, Integer> mapL = new TreeMap<Long, Integer>();
+		TreeMap<Long, Integer> mapR = new TreeMap<Long, Integer>();
+		for (Node curr : nodes) {
+			update(mapR, curr.y, 1);
 		}
-		return w * h;
+		long maxArea = (nodes[N - 1].x - nodes[0].x) * (mapR.lastKey() - mapR.firstKey());
+		long bestArea = maxArea;
+		int line = 0;
+		while (nodes[line].x < nodes[N - 1].x) {
+			int next = line + 1;
+			while (next < N && nodes[next].x == nodes[line].x) {
+				next++;
+			}
+			for (int toAdd = line; toAdd < next; toAdd++) {
+				update(mapR, nodes[toAdd].y, -1);
+				update(mapL, nodes[toAdd].y, 1);
+			}
+			bestArea = Math.min(bestArea, (nodes[line].x - nodes[0].x) * (mapL.lastKey() - mapL.firstKey()) + (nodes[N - 1].x - nodes[next].x) * (mapR.lastKey() - mapR.firstKey()));
+			line = next;
+		}
+		return maxArea - bestArea;
+	}
+	
+	private void update(TreeMap<Long, Integer> m, long k, int v) {
+		if (!m.containsKey(k)) {
+			m.put(k, 0);
+		}
+		int n = m.get(k) + v;
+		if (n == 0) {
+			m.remove(k);
+		} else {
+			m.put(k, n);
+		}
+	}
+	
+	public long savedY() {
+		for (Node curr : nodes) {
+			curr.reflect();
+		}
+		Arrays.sort(nodes);
+		return savedX();
 	}
 }
 
-class Node {
+class Node implements Comparable<Node> {
 	public int x;
 	public int y;
-	public boolean used = false;
 	
-	public Node(int a, int b) {
-		x = a;
-		y = b;
+	public Node(int x, int y) {
+		this.x = x;
+		this.y = y;
 	}
-}
-
-class CompareX implements Comparator<Node> {
+	
+	public void reflect() {
+		int temp = x;
+		x = y;
+		y = temp;
+	}
 	
 	@Override
-	public int compare(Node a, Node b) {
-		if (a.x == b.x) {
-			return Integer.compare(a.y, b.y);
-		}
-		return Integer.compare(a.x, b.x);
-	}
-}
-
-class CompareY implements Comparator<Node> {
-	
-	@Override
-	public int compare(Node a, Node b) {
-		if (a.y == b.y) {
-			return Integer.compare(a.x, b.x);
-		}
-		return Integer.compare(a.y, b.y);
+	public int compareTo(Node arg0) {
+		// TODO Auto-generated method stub
+		return Integer.compare(this.x, arg0.x);
 	}
 }
