@@ -17,15 +17,15 @@ public class Split {
 		PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("split.out")));
 		StringTokenizer tk = new StringTokenizer(in.readLine());
 		int N = Integer.parseInt(tk.nextToken());
-		Node[] nodes = new Node[N];
+		SplitNode[] SplitNodes = new SplitNode[N];
 		for (int i = 0; i < N; i++) {
 			tk = new StringTokenizer(in.readLine());
 			int x = Integer.parseInt(tk.nextToken());
 			int y = Integer.parseInt(tk.nextToken());
-			nodes[i] = new Node(x, y);
+			SplitNodes[i] = new SplitNode(x, y);
 		}
-		Arrays.sort(nodes);
-		Solver ans = new Solver(N, nodes);
+		Arrays.sort(SplitNodes);
+		Solver ans = new Solver(N, SplitNodes);
 		out.println(Math.max(ans.savedX(), ans.savedY()));
 		out.close();
 		in.close();
@@ -34,32 +34,33 @@ public class Split {
 
 class Solver {
 	private int N;
-	private Node[] nodes;
+	private SplitNode[] SplitNodes;
 	
-	public Solver(int N, Node[] nodes) {
+	public Solver(int N, SplitNode[] SplitNodes) {
 		this.N = N;
-		this.nodes = nodes;
+		this.SplitNodes = SplitNodes;
 	}
 	
 	public long savedX() {
 		TreeMap<Long, Integer> mapL = new TreeMap<Long, Integer>();
 		TreeMap<Long, Integer> mapR = new TreeMap<Long, Integer>();
-		for (Node curr : nodes) {
+		for (SplitNode curr : SplitNodes) {
 			update(mapR, curr.y, 1);
 		}
-		long maxArea = (nodes[N - 1].x - nodes[0].x) * (mapR.lastKey() - mapR.firstKey());
+		long maxArea = (SplitNodes[N - 1].x - SplitNodes[0].x) * (mapR.lastKey() - mapR.firstKey());
 		long bestArea = maxArea;
 		int line = 0;
-		while (nodes[line].x < nodes[N - 1].x) {
+		while (SplitNodes[line].x < SplitNodes[N - 1].x) {
 			int next = line + 1;
-			while (next < N && nodes[next].x == nodes[line].x) {
+			while (next < N && SplitNodes[next].x == SplitNodes[line].x) {
 				next++;
 			}
 			for (int toAdd = line; toAdd < next; toAdd++) {
-				update(mapR, nodes[toAdd].y, -1);
-				update(mapL, nodes[toAdd].y, 1);
+				update(mapR, SplitNodes[toAdd].y, -1);
+				update(mapL, SplitNodes[toAdd].y, 1);
 			}
-			bestArea = Math.min(bestArea, (nodes[line].x - nodes[0].x) * (mapL.lastKey() - mapL.firstKey()) + (nodes[N - 1].x - nodes[next].x) * (mapR.lastKey() - mapR.firstKey()));
+			bestArea = Math.min(bestArea,
+					(SplitNodes[line].x - SplitNodes[0].x) * (mapL.lastKey() - mapL.firstKey()) + (SplitNodes[N - 1].x - SplitNodes[next].x) * (mapR.lastKey() - mapR.firstKey()));
 			line = next;
 		}
 		return maxArea - bestArea;
@@ -78,19 +79,19 @@ class Solver {
 	}
 	
 	public long savedY() {
-		for (Node curr : nodes) {
+		for (SplitNode curr : SplitNodes) {
 			curr.reflect();
 		}
-		Arrays.sort(nodes);
+		Arrays.sort(SplitNodes);
 		return savedX();
 	}
 }
 
-class Node implements Comparable<Node> {
+class SplitNode implements Comparable<SplitNode> {
 	public int x;
 	public int y;
 	
-	public Node(int x, int y) {
+	public SplitNode(int x, int y) {
 		this.x = x;
 		this.y = y;
 	}
@@ -102,7 +103,7 @@ class Node implements Comparable<Node> {
 	}
 	
 	@Override
-	public int compareTo(Node arg0) {
+	public int compareTo(SplitNode arg0) {
 		// TODO Auto-generated method stub
 		return Integer.compare(this.x, arg0.x);
 	}
