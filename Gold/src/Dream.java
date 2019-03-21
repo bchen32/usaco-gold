@@ -23,7 +23,7 @@ public class Dream {
 		this.grid = grid;
 	}
 	
-	public int solve() {
+	public int bfs() {
 		int[][][] dp = new int[N][M][2];
 		for (int i = 0; i < N; i++) {
 			for (int j = 0; j < M; j++) {
@@ -32,6 +32,8 @@ public class Dream {
 			}
 		}
 		LinkedList<DreamState> q = new LinkedList<DreamState>();
+		q.add(new DreamState(0, 0, false, 0));
+		dp[0][0][0] = 0;
 		while (!q.isEmpty()) {
 			DreamState curr = q.poll();
 			for (int i = 0; i < 4; i++) {
@@ -45,9 +47,33 @@ public class Dream {
 						if (newTile == 4) {
 							// Slide
 							// Treat slide as a single move but with different dist
-							
+							int dist = 1;
+							while (true) {
+								if (grid[newR][newC] != 4) {
+									break;
+								}
+								newR += dirR[i];
+								newC += dirC[i];
+								if (inRange(newR, newC)) {
+									newTile = grid[newR][newC];
+									if (!(newTile != 0 && (newTile != 3 || curr.smell))) {
+										newR -= dirR[i];
+										newC -= dirC[i];
+										break;
+									}
+								} else {
+									newR -= dirR[i];
+									newC -= dirC[i];
+									break;
+								}
+								dist++;
+							}
+							if (curr.dist + dist < dp[newR][newC][smell ? 1 : 0]) {
+								dp[newR][newC][smell ? 1 : 0] = curr.dist + dist;
+								q.add(new DreamState(newR, newC, smell, curr.dist + dist));
+							}
 						} else if (curr.dist + 1 < dp[newR][newC][smell ? 1 : 0]) {
-							dp[newR][newC][smell ? 1 : 0] = curr.dist = 1;
+							dp[newR][newC][smell ? 1 : 0] = curr.dist + 1;
 							q.add(new DreamState(newR, newC, smell, curr.dist + 1));
 						}
 					}
@@ -62,7 +88,7 @@ public class Dream {
 	}
 	
 	public static void main(String[] args) throws IOException {
-		// BufferedReader in = new BufferedReader(new FileReader("C:\\Users\\bench\\git\\USACO-Gold\\Gold\\Dream\\1.in"));
+		// BufferedReader in = new BufferedReader(new FileReader("C:\\Users\\bench\\git\\USACO-Gold\\Gold\\Dream\\7.in"));
 		// BufferedReader in = new BufferedReader(new FileReader("H:\\git\\USACO-Gold\\Gold\\Dream\\1.in"));
 		BufferedReader in = new BufferedReader(new FileReader("dream.in"));
 		PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("dream.out")));
@@ -78,8 +104,8 @@ public class Dream {
 			}
 		}
 		Dream solver = new Dream(N, M, grid);
-		int ans = solver.solve();
-		if (ans == Integer.MAX_VALUE) {
+		int ans = solver.bfs();
+		if (ans == INF) {
 			ans = -1;
 		}
 		out.println(ans);
