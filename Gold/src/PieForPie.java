@@ -5,9 +5,89 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.StringTokenizer;
 
 public class PieForPie {
+	
+	int N;
+	int D;
+	Pie[] bessie = new Pie[N];
+	Pie[] elsie = new Pie[N];
+	int[] t;
+	int[] d;
+	boolean[] visitedBessie;
+	boolean[] visitedElsie;
+	
+	public PieForPie(int N, int D, Pie[] bessie, Pie[] elsie) {
+		this.N = N;
+		this.D = D;
+		this.bessie = bessie;
+		this.elsie = elsie;
+		t = new int[N];
+		d = new int[N];
+		visitedBessie = new boolean[N];
+		visitedElsie = new boolean[N];
+	}
+	
+	public int[] bfs() {
+		LinkedList<Pie> q = new LinkedList<Pie>();
+		for (int i = 0; i < N; i++) {
+			Pie curr = bessie[i];
+			if (curr.otherScore == 0) {
+				q.add(curr);
+				t[curr.num] = 1;
+				visitedBessie[curr.num] = true;
+			}
+		}
+		for (int i = 0; i < N; i++) {
+			Pie curr = elsie[i];
+			if (curr.otherScore == 0) {
+				q.add(curr);
+				d[curr.num] = 1;
+				visitedElsie[curr.num] = true;
+			}
+		}
+		
+		while (!q.isEmpty()) {
+			Pie curr = q.poll();
+			if (curr.bessie) {
+				
+			}
+		}
+		return t;
+	}
+	
+	public int lowerBound(Pie[] pies, int find) {
+		int min = 0;
+		int max = N;
+		int mid = -1;
+		boolean found = false;
+		
+		while (min <= max) {
+			mid = (min + max) / 2;
+			Pie toTry = pies[mid];
+			if (toTry.otherScore == find) {
+				found = true;
+				break;
+			} else if (toTry.otherScore < find) {
+				min = mid + 1;
+			} else {
+				max = mid;
+			}
+		}
+		if (found) {
+			// Check for duplicates
+			int i;
+			for (i = mid; i < max; i++) {
+				if (pies[i].otherScore > find) {
+					break;
+				}
+			}
+			return i - 1;
+		}
+		return Math.min(N - 1, min - 1);
+	}
 	
 	public static void main(String[] args) throws IOException {
 		// BufferedReader in = new BufferedReader(new FileReader("C:\\Users\\bench\\git\\USACO-Gold\\Gold\\PieForPie\\1.in"));
@@ -37,6 +117,8 @@ public class PieForPie {
 		}
 		Arrays.sort(bessie);
 		Arrays.sort(elsie);
+		PieForPie solver = new PieForPie(N, D, bessie, elsie);
+		
 		out.close();
 		in.close();
 	}
