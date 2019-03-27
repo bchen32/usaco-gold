@@ -52,7 +52,19 @@ public class PieForPie {
 		while (!q.isEmpty()) {
 			Pie curr = q.poll();
 			if (curr.bessie) {
-				
+				int found = lowerBound(elsie, curr.score);
+				Pie other = elsie[found];
+				while (found >= 0 && other.otherScore >= curr.score - D) {
+					if (!visitedElsie[other.num]) {
+						visitedElsie[other.num] = true;
+						d[other.num] = t[curr.num] + 1;
+						q.add(other);
+					}
+					found--;
+				}
+			} else {
+				int found = lowerBound(bessie, curr.score);
+				Pie other = elsie[found];
 			}
 		}
 		return t;
@@ -118,7 +130,10 @@ public class PieForPie {
 		Arrays.sort(bessie);
 		Arrays.sort(elsie);
 		PieForPie solver = new PieForPie(N, D, bessie, elsie);
-		
+		int[] dists = solver.bfs();
+		for (int i = 0; i < N; i++) {
+			System.out.println(dists[i] == 0 ? -1 : dists[i]);
+		}
 		out.close();
 		in.close();
 	}
