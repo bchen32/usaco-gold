@@ -64,7 +64,15 @@ public class PieForPie {
 				}
 			} else {
 				int found = lowerBound(bessie, curr.score);
-				Pie other = elsie[found];
+				Pie other = bessie[found];
+				while (found >= 0 && other.otherScore >= curr.score - D) {
+					if (!visitedBessie[other.num]) {
+						visitedBessie[other.num] = true;
+						t[other.num] = d[other.num] + 1;
+						q.add(other);
+					}
+					found--;
+				}
 			}
 		}
 		return t;
@@ -76,7 +84,7 @@ public class PieForPie {
 		int mid = -1;
 		boolean found = false;
 		
-		while (min <= max) {
+		while (min < max) {
 			mid = (min + max) / 2;
 			Pie toTry = pies[mid];
 			if (toTry.otherScore == find) {
@@ -111,10 +119,6 @@ public class PieForPie {
 		int D = Integer.parseInt(tk.nextToken());
 		Pie[] bessie = new Pie[N];
 		Pie[] elsie = new Pie[N];
-		int[] t = new int[N];
-		int[] d = new int[N];
-		boolean[] visitedBessie = new boolean[N];
-		boolean[] visitedElsie = new boolean[N];
 		for (int i = 0; i < N; i++) {
 			tk = new StringTokenizer(in.readLine());
 			int score = Integer.parseInt(tk.nextToken());
@@ -132,7 +136,7 @@ public class PieForPie {
 		PieForPie solver = new PieForPie(N, D, bessie, elsie);
 		int[] dists = solver.bfs();
 		for (int i = 0; i < N; i++) {
-			System.out.println(dists[i] == 0 ? -1 : dists[i]);
+			out.println(dists[i] == 0 ? -1 : dists[i]);
 		}
 		out.close();
 		in.close();
