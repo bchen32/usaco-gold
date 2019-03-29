@@ -53,8 +53,8 @@ public class PieForPie {
 			Pie curr = q.poll();
 			if (curr.bessie) {
 				int found = lowerBound(elsie, curr.score);
-				Pie other = elsie[found];
-				while (found >= 0 && other.otherScore >= curr.score - D) {
+				while (found >= 0 && elsie[found].otherScore >= curr.score - D) {
+					Pie other = elsie[found];
 					if (!visitedElsie[other.num]) {
 						visitedElsie[other.num] = true;
 						d[other.num] = t[curr.num] + 1;
@@ -64,11 +64,11 @@ public class PieForPie {
 				}
 			} else {
 				int found = lowerBound(bessie, curr.score);
-				Pie other = bessie[found];
-				while (found >= 0 && other.otherScore >= curr.score - D) {
+				while (found >= 0 && bessie[found].otherScore >= curr.score - D) {
+					Pie other = bessie[found];
 					if (!visitedBessie[other.num]) {
 						visitedBessie[other.num] = true;
-						t[other.num] = d[other.num] + 1;
+						t[other.num] = d[curr.num] + 1;
 						q.add(other);
 					}
 					found--;
@@ -110,7 +110,7 @@ public class PieForPie {
 	}
 	
 	public static void main(String[] args) throws IOException {
-		// BufferedReader in = new BufferedReader(new FileReader("C:\\Users\\bench\\git\\USACO-Gold\\Gold\\PieForPie\\1.in"));
+		// BufferedReader in = new BufferedReader(new FileReader("C:\\Users\\bench\\git\\USACO-Gold\\Gold\\PieForPie\\2.in"));
 		// BufferedReader in = new BufferedReader(new FileReader("H:\\git\\USACO-Gold\\Gold\\PieForPie\\1.in"));
 		BufferedReader in = new BufferedReader(new FileReader("piepie.in"));
 		PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("piepie.out")));
