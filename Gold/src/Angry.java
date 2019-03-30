@@ -7,9 +7,9 @@ import java.io.PrintWriter;
 import java.util.TreeSet;
 
 public class Angry {
-
+	
 	public static void main(String[] args) throws IOException {
-//		BufferedReader in = new BufferedReader(new FileReader("C:\\Users\\bench\\git\\USACO-Gold\\Gold\\Angry\\3.in"));
+		// BufferedReader in = new BufferedReader(new FileReader("C:\\Users\\bench\\git\\USACO-Gold\\Gold\\Angry\\3.in"));
 		BufferedReader in = new BufferedReader(new FileReader("angry.in"));
 		PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("angry.out")));
 		int N = Integer.parseInt(in.readLine());
@@ -22,12 +22,11 @@ public class Angry {
 		out.close();
 		in.close();
 	}
-
+	
 	public static long bSearch(long l, long h, TreeSet<Long> list) {
 		// Binary search possible radii
-
-		// If a given radius works, then anything bigger is guaranteed to work and vice
-		// versa
+		
+		// If a given radius works, then anything bigger is guaranteed to work and vice versa
 		long currR = (l + h) / 2;
 		while (l < h) {
 			currR = (l + h) / 2;
@@ -44,8 +43,7 @@ public class Angry {
 					right = currStart - 1;
 				}
 			}
-			// Optimal starting point has been found (furthest right that can still reach
-			// left)
+			// Optimal starting point has been found (furthest right that can still reach left)
 			if (checkRight(list, left, currR)) {
 				h = currR;
 			} else {
@@ -54,10 +52,9 @@ public class Angry {
 		}
 		return l;
 	}
-
+	
 	static boolean checkLeft(TreeSet<Long> list, long start, long r) {
-		// For a given starting pos and radius, check if the explosion can reach all the
-		// way left
+		// For a given starting pos and radius, check if the explosion can reach all the way left
 		if (start - r <= list.first()) {
 			// Can directly reach
 			return true;
@@ -76,7 +73,7 @@ public class Angry {
 		}
 		return true;
 	}
-
+	
 	static boolean checkRight(TreeSet<Long> list, long start, long r) {
 		// For a given starting pos and radius, check it can reach right
 		if (start + r >= list.last()) {
