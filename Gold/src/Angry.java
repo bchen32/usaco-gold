@@ -9,8 +9,8 @@ import java.util.TreeSet;
 public class Angry {
 	
 	public static void main(String[] args) throws IOException {
-		// BufferedReader in = new BufferedReader(new FileReader("C:\\Users\\bench\\git\\USACO-Gold\\Gold\\Angry\\3.in"));
-		BufferedReader in = new BufferedReader(new FileReader("angry.in"));
+		BufferedReader in = new BufferedReader(new FileReader("C:\\Users\\bench\\git\\USACO-Gold\\Gold\\Angry\\4.in"));
+		// BufferedReader in = new BufferedReader(new FileReader("angry.in"));
 		PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("angry.out")));
 		int N = Integer.parseInt(in.readLine());
 		TreeSet<Long> cows = new TreeSet<Long>();
