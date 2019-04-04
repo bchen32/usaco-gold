@@ -19,7 +19,7 @@ public class MooTube {
 		int Q = Integer.parseInt(tk.nextToken());
 		MTEdge[] edges = new MTEdge[N - 1];
 		MTQuery[] queries = new MTQuery[Q];
-		for (int i = 0; i < N; i++) {
+		for (int i = 0; i < N - 1; i++) {
 			tk = new StringTokenizer(in.readLine());
 			int v1 = Integer.parseInt(tk.nextToken()) - 1;
 			int v2 = Integer.parseInt(tk.nextToken()) - 1;
@@ -34,6 +34,20 @@ public class MooTube {
 		}
 		Arrays.sort(edges);
 		Arrays.sort(queries);
+		int ind = 0;
+		DisjointSet set = new DisjointSet(N);
+		int[] numVids = new int[Q];
+		for (int i = 0; i < Q; i++) {
+			MTQuery curr = queries[i];
+			while (ind < N - 1 && edges[ind].w >= curr.threshold) {
+				set.union(edges[ind].v1, edges[ind].v2);
+				ind++;
+			}
+			numVids[curr.num] = set.size[set.root(curr.start)] - 1;
+		}
+		for (int i = 0; i < Q; i++) {
+			out.println(numVids[i]);
+		}
 		out.close();
 		in.close();
 	}
@@ -76,8 +90,8 @@ class DisjointSet {
 	int[] size;
 	int N;
 	
-	public DisjointSet(int a) {
-		N = a;
+	public DisjointSet(int N) {
+		this.N = N;
 		arr = new int[N];
 		size = new int[N];
 		Arrays.fill(size, 1);
