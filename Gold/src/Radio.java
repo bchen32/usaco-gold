@@ -8,36 +8,44 @@ import java.util.StringTokenizer;
 
 public class Radio {
 	
-	static int N;
-	static int M;
+	public int N;
+	public int M;
 	
-	static int[] dX = {0, 1, 0, -1};
-	static int[] dY = {1, 0, -1, 0};
+	public static final int[] dX = { 0, 1, 0, -1 };
+	public static final int[] dY = { 1, 0, -1, 0 };
 	
-	static int[] fPath;
-	static int[] cPath;
+	public int[] fPath;
+	public int[] cPath;
 	
-	static long[][] dp;
-
+	public long[][] dp;
+	
+	public Radio(int N, int M, int[] fPath, int[] cPath, long[][] dp) {
+		this.N = N;
+		this.M = M;
+		this.fPath = fPath;
+		this.cPath = cPath;
+		this.dp = dp;
+	}
+	
 	public static void main(String[] args) throws IOException {
-//		BufferedReader in = new BufferedReader(new FileReader("C:\\Users\\bench\\git\\USACO-Gold\\Gold\\Radio\\2.in"));
+		// BufferedReader in = new BufferedReader(new FileReader("C:\\Users\\bench\\git\\USACO-Gold\\Gold\\Radio\\2.in"));
 		BufferedReader in = new BufferedReader(new FileReader("radio.in"));
 		PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("radio.out")));
 		StringTokenizer ln = new StringTokenizer(in.readLine());
-		N = Integer.parseInt(ln.nextToken());
-		M = Integer.parseInt(ln.nextToken());
-		dp = new long[N + 1][M + 1];
+		int N = Integer.parseInt(ln.nextToken());
+		int M = Integer.parseInt(ln.nextToken());
+		long[][] dp = new long[N + 1][M + 1];
 		for (int i = 0; i < N + 1; i++) {
 			for (int j = 0; j < M + 1; j++) {
 				dp[i][j] = -1;
 			}
 		}
 		ln = new StringTokenizer(in.readLine());
-		Point farmer = new Point(Integer.parseInt(ln.nextToken()), Integer.parseInt(ln.nextToken()));
+		RPoint farmer = new RPoint(Integer.parseInt(ln.nextToken()), Integer.parseInt(ln.nextToken()));
 		ln = new StringTokenizer(in.readLine());
-		Point cow = new Point(Integer.parseInt(ln.nextToken()), Integer.parseInt(ln.nextToken()));
+		RPoint cow = new RPoint(Integer.parseInt(ln.nextToken()), Integer.parseInt(ln.nextToken()));
 		String l1 = in.readLine();
-		fPath = new int[N];
+		int[] fPath = new int[N];
 		for (int i = 0; i < N; i++) {
 			String s = l1.substring(i, i + 1);
 			switch (s) {
@@ -56,7 +64,7 @@ public class Radio {
 			}
 		}
 		String l2 = in.readLine();
-		cPath = new int[M];
+		int[] cPath = new int[M];
 		for (int i = 0; i < M; i++) {
 			String s = l2.substring(i, i + 1);
 			switch (s) {
@@ -74,12 +82,13 @@ public class Radio {
 				break;
 			}
 		}
-		out.println(calc(0, 0, 0 - (farmer.x - cow.x) * (farmer.x - cow.x) - (farmer.y - cow.y) * (farmer.y - cow.y), farmer, cow));
+		Radio solve = new Radio(N, M, fPath, cPath, dp);
+		out.println(solve.calc(0, 0, 0 - (farmer.x - cow.x) * (farmer.x - cow.x) - (farmer.y - cow.y) * (farmer.y - cow.y), farmer, cow));
 		out.close();
 		in.close();
 	}
 	
-	static long calc(int f, int c, long energy, Point farmer, Point cow) {
+	public long calc(int f, int c, long energy, RPoint farmer, RPoint cow) {
 		long sq = (farmer.x - cow.x) * (farmer.x - cow.x) + (farmer.y - cow.y) * (farmer.y - cow.y);
 		long ans = Long.MAX_VALUE;
 		if (f == N && c == M) {
@@ -88,13 +97,13 @@ public class Radio {
 		if (dp[f][c] != -1) {
 			return dp[f][c] + energy;
 		}
-		Point newFarmer = null;
-		Point newCow = null;
+		RPoint newFarmer = null;
+		RPoint newCow = null;
 		if (f < N) {
-			newFarmer = new Point(farmer.x + dX[fPath[f]], farmer.y + dY[fPath[f]]);
+			newFarmer = new RPoint(farmer.x + dX[fPath[f]], farmer.y + dY[fPath[f]]);
 		}
 		if (c < M) {
-			newCow = new Point(cow.x + dX[cPath[c]], cow.y + dY[cPath[c]]);
+			newCow = new RPoint(cow.x + dX[cPath[c]], cow.y + dY[cPath[c]]);
 		}
 		if (f == N) {
 			ans = Math.min(ans, calc(f, c + 1, energy + sq, farmer, newCow));
@@ -106,14 +115,14 @@ public class Radio {
 		dp[f][c] = ans - energy;
 		return ans;
 	}
+}
+
+class RPoint {
+	int x;
+	int y;
 	
-	static class Point {
-		int x;
-		int y;
-		
-		public Point(int a, int b) {
-			x = a;
-			y = b;
-		}
+	public RPoint(int a, int b) {
+		x = a;
+		y = b;
 	}
 }

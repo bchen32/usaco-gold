@@ -23,11 +23,11 @@ public class OutOfSorts {
 	}
 }
 
-class BITree {
+class SortBITree {
 	int BITree[];
 	int N;
 	
-	public BITree(int N) {
+	public SortBITree(int N) {
 		this.N = N;
 		BITree = new int[N + 1];
 	}

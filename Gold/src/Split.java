@@ -25,18 +25,18 @@ public class Split {
 			SplitNodes[i] = new SplitNode(x, y);
 		}
 		Arrays.sort(SplitNodes);
-		Solver ans = new Solver(N, SplitNodes);
+		SplitSolver ans = new SplitSolver(N, SplitNodes);
 		out.println(Math.max(ans.savedX(), ans.savedY()));
 		out.close();
 		in.close();
 	}
 }
 
-class Solver {
+class SplitSolver {
 	private int N;
 	private SplitNode[] SplitNodes;
 	
-	public Solver(int N, SplitNode[] SplitNodes) {
+	public SplitSolver(int N, SplitNode[] SplitNodes) {
 		this.N = N;
 		this.SplitNodes = SplitNodes;
 	}

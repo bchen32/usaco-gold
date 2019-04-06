@@ -16,8 +16,8 @@ public class FileDirectory {
 	private int[] parents;
 	private HashSet<Integer> files;
 	private String[] names;
-	private Node[] subtreeNodes;
-	private Node[] supertreeNodes;
+	private FDNode[] subtreeFDNodes;
+	private FDNode[] supertreeFDNodes;
 	
 	public FileDirectory(int N, LinkedList<Integer>[] adjList2, int[] parents, String[] names, HashSet<Integer> files2) {
 		this.N = N;
@@ -25,12 +25,12 @@ public class FileDirectory {
 		this.parents = parents;
 		this.names = names;
 		this.files = files2;
-		this.subtreeNodes = new Node[N];
-		this.supertreeNodes = new Node[N];
-		this.supertreeNodes[0] = new Node(0, 0);
+		this.subtreeFDNodes = new FDNode[N];
+		this.supertreeFDNodes = new FDNode[N];
+		this.supertreeFDNodes[0] = new FDNode(0, 0);
 	}
 	
-	public void findsupertreeNodes() {
+	public void findsupertreeFDNodes() {
 		Stack<Integer> s = new Stack<Integer>();
 		boolean[] visited = new boolean[N];
 		
@@ -41,23 +41,23 @@ public class FileDirectory {
 			int curr = s.pop();
 			visited[curr] = true;
 			LinkedList<Integer> adj = adjList[curr];
-			Node aSuper = supertreeNodes[curr];
-			Node aSub = subtreeNodes[curr];
+			FDNode aSuper = supertreeFDNodes[curr];
+			FDNode aSub = subtreeFDNodes[curr];
 			long baselineSum = aSuper.sum + (3 * aSuper.numFiles) + aSub.sum + (3 * aSub.numFiles);
 			for (int i : adj) {
 				if (parents[curr] != i) {
-					Node bSub = subtreeNodes[i];
+					FDNode bSub = subtreeFDNodes[i];
 					long sum = baselineSum;
 					int numSuperfiles = aSuper.numFiles + aSub.numFiles - bSub.numFiles;
 					sum += -bSub.sum - (bSub.numFiles * (names[i].length() + 4));
-					supertreeNodes[i] = new Node(sum, numSuperfiles);
+					supertreeFDNodes[i] = new FDNode(sum, numSuperfiles);
 					s.push(i);
 				}
 			}
 		}
 	}
 	
-	public void findsubtreeNodes() {
+	public void findsubtreeFDNodes() {
 		Stack<Integer> s1 = new Stack<Integer>();
 		Stack<Integer> s2 = new Stack<Integer>();
 		boolean[] visited = new boolean[N];
@@ -87,13 +87,13 @@ public class FileDirectory {
 						sum += names[i].length();
 						numSubfiles++;
 					} else {
-						Node child = subtreeNodes[i];
+						FDNode child = subtreeFDNodes[i];
 						sum += child.numFiles * (names[i].length() + 1) + child.sum;
 						numSubfiles += child.numFiles;
 					}
 				}
 			}
-			subtreeNodes[curr] = new Node(sum, numSubfiles);
+			subtreeFDNodes[curr] = new FDNode(sum, numSubfiles);
 		}
 	}
 	
@@ -101,7 +101,7 @@ public class FileDirectory {
 		long best = Long.MAX_VALUE;
 		for (int i = 0; i < N; i++) {
 			if (!files.contains(i)) {
-				best = Math.min(best, subtreeNodes[i].sum + supertreeNodes[i].sum);
+				best = Math.min(best, subtreeFDNodes[i].sum + supertreeFDNodes[i].sum);
 			}
 		}
 		return best;
@@ -133,27 +133,27 @@ public class FileDirectory {
 				files.add(i);
 			}
 			for (int j = 0; j < m; j++) {
-				int node = Integer.parseInt(tk.nextToken()) - 1;
-				adjList[i].add(node);
-				adjList[node].add(i);
-				parents[node] = i;
+				int FDNode = Integer.parseInt(tk.nextToken()) - 1;
+				adjList[i].add(FDNode);
+				adjList[FDNode].add(i);
+				parents[FDNode] = i;
 			}
 		}
 		FileDirectory calc = new FileDirectory(N, adjList, parents, names, files);
-		calc.findsubtreeNodes();
-		calc.findsupertreeNodes();
+		calc.findsubtreeFDNodes();
+		calc.findsupertreeFDNodes();
 		out.println(calc.bestDist());
 		out.close();
 		in.close();
 	}
+}
+
+class FDNode {
+	int numFiles;
+	long sum;
 	
-	static class Node {
-		int numFiles;
-		long sum;
-		
-		public Node(long s, int sub) {
-			sum = s;
-			numFiles = sub;
-		}
+	public FDNode(long s, int sub) {
+		sum = s;
+		numFiles = sub;
 	}
 }

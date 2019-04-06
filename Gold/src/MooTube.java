@@ -35,7 +35,7 @@ public class MooTube {
 		Arrays.sort(edges);
 		Arrays.sort(queries);
 		int ind = 0;
-		DisjointSet set = new DisjointSet(N);
+		MTDisjointSet set = new MTDisjointSet(N);
 		int[] numVids = new int[Q];
 		for (int i = 0; i < Q; i++) {
 			MTQuery curr = queries[i];
@@ -85,12 +85,12 @@ class MTQuery implements Comparable<MTQuery> {
 	}
 }
 
-class DisjointSet {
+class MTDisjointSet {
 	int[] arr;
 	int[] size;
 	int N;
 	
-	public DisjointSet(int N) {
+	public MTDisjointSet(int N) {
 		this.N = N;
 		arr = new int[N];
 		size = new int[N];

@@ -18,12 +18,13 @@ public class Angry {
 			cows.add(2L * Integer.parseInt(in.readLine()));
 		}
 		long maxRad = (cows.last() - cows.first()) / 2;
-		out.printf("%.1f\n", bSearch(0, maxRad, cows) / 2.0);
+		Angry solve = new Angry();
+		out.printf("%.1f\n", solve.bSearch(0, maxRad, cows) / 2.0);
 		out.close();
 		in.close();
 	}
 	
-	public static long bSearch(long l, long h, TreeSet<Long> list) {
+	public long bSearch(long l, long h, TreeSet<Long> list) {
 		// Binary search possible radii
 		
 		// If a given radius works, then anything bigger is guaranteed to work and vice versa
@@ -53,7 +54,7 @@ public class Angry {
 		return l;
 	}
 	
-	static boolean checkLeft(TreeSet<Long> list, long start, long r) {
+	public boolean checkLeft(TreeSet<Long> list, long start, long r) {
 		// For a given starting pos and radius, check if the explosion can reach all the way left
 		if (start - r <= list.first()) {
 			// Can directly reach
@@ -74,7 +75,7 @@ public class Angry {
 		return true;
 	}
 	
-	static boolean checkRight(TreeSet<Long> list, long start, long r) {
+	public boolean checkRight(TreeSet<Long> list, long start, long r) {
 		// For a given starting pos and radius, check it can reach right
 		if (start + r >= list.last()) {
 			// Can directly reach
