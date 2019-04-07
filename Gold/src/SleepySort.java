@@ -16,40 +16,58 @@ public class SleepySort {
 		StringTokenizer tk = new StringTokenizer(in.readLine());
 		int N = Integer.parseInt(tk.nextToken());
 		int[] input = new int[N];
+		tk = new StringTokenizer(in.readLine());
 		for (int i = 0; i < N; i++) {
-			tk = new StringTokenizer(in.readLine());
-			input[i] = Integer.parseInt(tk.nextToken());
+			input[i] = Integer.parseInt(tk.nextToken()) - 1;
 		}
-		
+		int sortInd = N - 1;
+		while (sortInd >= 1 && input[sortInd] > input[sortInd - 1]) {
+			sortInd--;
+		}
+		int[] instructions = new int[sortInd];
+		SleepyBIT BIT = new SleepyBIT(N);
+		for (int i = sortInd; i < N; i++) {
+			BIT.update(input[i], 1);
+		}
+		for (int i = 0; i < sortInd; i++) {
+			instructions[i] = (sortInd - i - 1) + BIT.get(input[i]);
+			BIT.update(input[i], 1);
+		}
+		StringBuilder ret = new StringBuilder("");
+		ret.append(sortInd + "\n");
+		for (int i = 0; i < sortInd; i++) {
+			ret.append(instructions[i] + " ");
+		}
+		ret.deleteCharAt(ret.length() - 1);
+		out.println(ret);
 		out.close();
 		in.close();
 	}
 }
 
-class SleepyBITree {
-	int BITree[];
+class SleepyBIT {
+	int BIT[];
 	int N;
 	
-	public SleepyBITree(int N) {
+	public SleepyBIT(int N) {
 		this.N = N;
-		BITree = new int[N + 1];
+		BIT = new int[N + 1];
 	}
 	
 	public int get(int index) {
 		int sum = 0;
-		index = index + 1;
+		index++;
 		while (index > 0) {
-			sum += BITree[index];
+			sum += BIT[index];
 			index -= index & (-index);
 		}
 		return sum;
 	}
 	
 	public void update(int index, int val) {
-		index = index + 1;
-		
+		index++;
 		while (index <= N) {
-			BITree[index] += val;
+			BIT[index] += val;
 			index += index & (-index);
 		}
 	}
