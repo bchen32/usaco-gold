@@ -47,9 +47,9 @@ public class CowPoetry {
 					continue;
 				}
 				if (i + syllables == K) {
-					rhymes[rhyme] = (rhymes[rhyme] + dp[i] + MOD) % MOD;
+					rhymes[rhyme] = (rhymes[rhyme] + dp[i]) % MOD;
 				}
-				dp[i + syllables] = (dp[i + syllables] + dp[i] + MOD) % MOD;
+				dp[i + syllables] = (dp[i + syllables] + dp[i]) % MOD;
 			}
 		}
 		long ans = 1L;
@@ -57,9 +57,9 @@ public class CowPoetry {
 		for (String r : freqs.keySet()) {
 			long currClass = 0L;
 			for (int i = 0; i < N + 1; i++) {
-				currClass = (currClass + solve.exp(rhymes[i], freqs.get(r)) + MOD) % MOD;
+				currClass = (currClass + solve.exp(rhymes[i], freqs.get(r))) % MOD;
 			}
-			ans = (ans * currClass + MOD) % MOD;
+			ans = (ans * currClass) % MOD;
 		}
 		out.println(ans);
 		out.close();
@@ -70,13 +70,13 @@ public class CowPoetry {
 		if (p == 0) {
 			return 0;
 		} else if (p == 1) {
-			return (b + MOD) % MOD;
+			return (b) % MOD;
 		}
 		long ans = exp(b, p / 2);
-		ans = (ans * ans + MOD) % MOD;
+		ans = (ans * ans) % MOD;
 		if (p % 2 == 1)
-			ans = (ans * b + MOD) % MOD;
-		return (ans + MOD) % MOD;
+			ans = (ans * b) % MOD;
+		return (ans) % MOD;
 	}
 }
 
