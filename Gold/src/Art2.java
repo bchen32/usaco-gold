@@ -29,6 +29,7 @@ public class Art2 {
 			colorStart[color] = Math.min(colorStart[color], i + 1);
 			colorEnd[color] = Math.max(colorEnd[color], i + 1);
 		}
+		
 		Stack<Integer> stack = new Stack<Integer>();
 		int layers = 0;
 		for (int i = 0; i < N + 2; i++) {
