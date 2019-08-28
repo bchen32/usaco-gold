@@ -24,12 +24,34 @@ If i is the first occurence of that currColor, add it to the stack and update ma
 If currColor is not equal to the top of the stack, then this is not an authentic picowso painting (try 1 4 1 4 to see why this works)
 If i is the last occurence of currColor, then pop it from the stack.
 
+Balance
+Simple simulation
+Swapping pieces on one side of the board only changes delta by 1
+Swapping central pieces is more complicated, think of it as moving ones across the divide, either move ones left, or right, doesn't make sense to do both:
+if swapping ones from left to right
+left inversions -= left ones;
+right inversions -= (N - right ones);
+if swapping ones from right to left
+i1 += ones left - 1;
+i2 += (N - ones right) - 1;
+Then calculate number of moves needed to set up the central swap
+Loop through number of central swaps for left and right separately, take min
+
 BalancedPhoto
 Sort the cows by their height from largest to smallest. Looping through the sorted array of cows, and every time you process a cow, set it's index in the BIT to 1. This lets you arrive at a fairly common usage of the BIT. In a given iteration of the loop, all cows taller than the current cow will have their indices set to 1 in the BIT. If you find sum(currCow.index), then you will have the number of cows taller and to the left of the current cow. Then, i (the number of cows already processed, aka the total number of cows taller than currCow) - sum will equal the number of taller cows to the right of the current cow. This comes out to a complexity of O(NlogN)
 
+BarnPainting
+
+
 Censoring
+Gave up
+Some weird hashing stuff
 
 Checklist
+Dp solution
+State is num H cows visited and num G cows visited, as well as whether the last cow is H or G. dp[h][g][isH]
+dp[h][g][true] = dp[h - 1][g][false] + dp[h - 1][g][true];
+dp[h][g][false] = dp[h][g - 1][true] + dp[h][g - 1][false];
 
 Cow248
 
