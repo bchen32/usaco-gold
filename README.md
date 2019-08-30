@@ -68,6 +68,7 @@ dp[h][g][true] = dp[h - 1][g][false] + dp[h - 1][g][true];
 dp[h][g][false] = dp[h][g - 1][true] + dp[h][g - 1][false];
 
 CircleBarn
+First, use running sum to find the "least correct" spot. Starting there, loop through the barn and do a greedy. If you're on a zero, go back until the first non zero and move that cow. Calculate the distance and add it up.
 
 CircleBarn2
 
