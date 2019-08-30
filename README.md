@@ -41,7 +41,21 @@ BalancedPhoto
 Sort the cows by their height from largest to smallest. Looping through the sorted array of cows, and every time you process a cow, set it's index in the BIT to 1. This lets you arrive at a fairly common usage of the BIT. In a given iteration of the loop, all cows taller than the current cow will have their indices set to 1 in the BIT. If you find sum(currCow.index), then you will have the number of cows taller and to the left of the current cow. Then, i (the number of cows already processed, aka the total number of cows taller than currCow) - sum will equal the number of taller cows to the right of the current cow. This comes out to a complexity of O(NlogN)
 
 BarnPainting
-
+Another dp problem
+State is root vert num and current color
+Do this recursively
+for (int curr : adjList[root]) {
+        long sub = 0;
+        for (int c = 0; c < 3; c++) {
+                if (c == color) {
+                        continue;
+                }
+                sub += recurse(curr, c, root, color) % MOD;
+        }
+        ans = (ans * sub) % MOD;
+}
+dp[root][color] = ans;
+Then, just check that no colorings are being violated and be careful of mod/overflow
 
 Censoring
 Gave up
@@ -53,7 +67,17 @@ State is num H cows visited and num G cows visited, as well as whether the last 
 dp[h][g][true] = dp[h - 1][g][false] + dp[h - 1][g][true];
 dp[h][g][false] = dp[h][g - 1][true] + dp[h][g - 1][false];
 
+CircleBarn
+
+CircleBarn2
+
+Circlecross
+
+ClosingFarm
+
+
 Cow248
+
 
 CowAtLarge
 
