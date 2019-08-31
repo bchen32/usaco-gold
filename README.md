@@ -71,10 +71,19 @@ CircleBarn
 First, use running sum to find the "least correct" spot. Starting there, loop through the barn and do a greedy. If you're on a zero, go back until the first non zero and move that cow. Calculate the distance and add it up.
 
 CircleBarn2
+More dp. Instead of a circular barn, think of it as linear and loop through every possible starting positions.
+State is dp[k][i] where k is the number of doors used and i is the position of the last door
+Transition:
+dp[k][i] = loop lastDoor from i to 0 {min(dp[k][lastDoor] + sum)}
+sum is just the accumulated distance cows would have to walk from lastDoor to i
 
 Circlecross
+BIT problem
+Store input as pairs (firstInd, secondInd) and sort by firstInd
+Loop through and do BIT.get(secondInd) - BIT.get(firstInd) which gives you the number of cows whos firstInd is less than curr firstInd and whose secondInd is greater than curr firstInd but less than curr secondInd, aka an interescting pair. Then do BIT.update(secondInd, 1)
 
 ClosingFarm
+Textbook usage of DisjointSet data structure. Trick is to go backwards, start with fully closed barn and add edges. Also remember that if a graph has numVerts - 1 unique edges, it is fully connected. So keep track of verts - 1 of the current state of the graph, and increment it every time you "open" a new barn and decrement it every time you add an edge.
 
 
 Cow248
