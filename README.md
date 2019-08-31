@@ -44,12 +44,11 @@ BarnPainting
 Another dp problem
 State is root vert num and current color
 Do this recursively
-for (int curr : adjList[root]) {
+curr : adjList[root]
         long sub = 0;
-        for (int c = 0; c < 3; c++) {
-                if (c == color) {
-                        continue;
-                }
+        c = 0 : 3
+                if (c == color)
+                        continue
                 sub += recurse(curr, c, root, color) % MOD;
         }
         ans = (ans * sub) % MOD;
@@ -74,8 +73,18 @@ CircleBarn2
 More dp. Instead of a circular barn, think of it as linear and loop through every possible starting positions.
 State is dp[k][i] where k is the number of doors used and i is the position of the last door
 Transition:
-dp[k][i] = loop lastDoor from i to 0 {min(dp[k][lastDoor] + sum)}
-sum is just the accumulated distance cows would have to walk from lastDoor to i
+start = 0 : N
+        "rotate" doors
+        initialize dp
+        k = 1 : K
+                j = k + 1 : N
+                        sum = 0
+                        curr = rotated[j]
+                        lastDoor = j - 1 : 0
+                                sum += curr
+                                dp[k][j] = min(dp[k][j], dp[k - 1][lastDoor - 1] + sum)
+                                curr += rotated[lastDoor]
+Essentially turning circular barn into linear first, and then adding up the distance cows would have to walk from last door to current dp state
 
 Circlecross
 BIT problem
@@ -83,13 +92,30 @@ Store input as pairs (firstInd, secondInd) and sort by firstInd
 Loop through and do BIT.get(secondInd) - BIT.get(firstInd) which gives you the number of cows whos firstInd is less than curr firstInd and whose secondInd is greater than curr firstInd but less than curr secondInd, aka an interescting pair. Then do BIT.update(secondInd, 1)
 
 ClosingFarm
-Textbook usage of DisjointSet data structure. Trick is to go backwards, start with fully closed barn and add edges. Also remember that if a graph has numVerts - 1 unique edges, it is fully connected. So keep track of verts - 1 of the current state of the graph, and increment it every time you "open" a new barn and decrement it every time you add an edge.
+DSU problem data structure. Trick is to go backwards, start with fully closed barn and add edges. Also remember that if a graph has numVerts - 1 unique edges, it is fully connected. So keep track of verts - 1 of the current state of the graph, and increment it every time you "open" a new barn and decrement it every time you add an edge.
 
 
 Cow248
+Fairly weird dp problem with a small constraint (N <= 248)
+State is the largest number possible in the sub interval starting at i with a length of j
+Transition:
+l = 0 : N
+        i = 0 : N - l
+                k = 0 : l
+                        if dp[i][k] == dp[i + k + 1][l - k - 1]
+                                dp[i][l] = Math.max(dp[i][l], dp[i][k] + 1;
+Essentially looping over every sub interval, and then seeing if any sub intervals within that interval can be combined
 
 
 CowAtLarge
+Graph problem
+First of all, bessie should always move away from the root and farmers should always move towards the root. If a farmer gets to a barn before Bessie, than that barn's subtree is completely closed off. We want the minimum amount of farmers which can close off all leaves. Another way to think of this is that if a node is closer or equally close to the nearest leaf, but it's parent is closer to the root, then there needs to be a farmer at that leaf to stop Bessie from escaping into that subtree. Thus, our solution is finding all nodes who satisfy this condition. First run a bfs from root to calculate distances from root. Then run a multi source bfs from every leaf to calculate distances to nearest leaf. Simply compare these to find the number of nodes satisfying the above conditions, and that's your answer.
+
+CowNav
+Finnicky bfs problem
+Visualize 2 possibilities as moving 2 cows simultaneously
+State is position of both potential spots dp[x1][y1][x2][y2]
+At every state, can either turn left or right, or move forwards, which requires some additional checking
 
 Cownomics
 
