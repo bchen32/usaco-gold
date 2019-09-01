@@ -118,6 +118,21 @@ State is position of both potential spots dp[x1][y1][x2][y2]
 At every state, can either turn left or right, or move forwards, which requires some additional checking
 
 Cownomics
+A rolling hash problem
+Keep an index j to mark the front of the hash, and an index i to mark the back of the hash. If overlapping cows > 0, advance j, if overlapping cows <= 0, advance i. Your answer is min(ans, j - i).
+
+Cowpatibility
+Crazy hard problem
+Realize that cows are fixed at 5 flavors, meaning there are only 31 possible subsets of a given cows flavors
+Keep an array of HashMaps subsets = new HashMap[5]
+subsets[i] = HashMap<HashedArray of length i, Long>
+HashedArray is a sorted subset of flavors and the value is the number of cows
+Loop through each input cow
+First sort that cows flavors
+Then loop through every possible subset of that cows flavors
+Create a HashedArray for that subset and add it to subsets[size] where size is the number of flavors in that subset. If it's already in subsets[size], then increment that value.
+After you do this for every cow, you will have HashMaps where key = subset of flavors and value = number of cows who like that subset, where the HashMaps are broken up by size of subset.
+If x cows like a certain subset, there are x(x - 1) / 2 pairs of cows who like that subset. Thus, we can find the number of pairs of cows who share subsets of size 1, size 2, size 3, size 4, and size 5. Now, we use PIE to calculate the number of compatible pairs, which can easily be turned into our answer. By PIE the compatible cows are subsetSum1 - subsetSum2 + subsetSum3 - subsetSum4 + subsetSum 5.
 
 Dream
 
