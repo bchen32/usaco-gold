@@ -134,6 +134,21 @@ Create a HashedArray for that subset and add it to subsets[size] where size is t
 After you do this for every cow, you will have HashMaps where key = subset of flavors and value = number of cows who like that subset, where the HashMaps are broken up by size of subset.
 If x cows like a certain subset, there are x(x - 1) / 2 pairs of cows who like that subset. Thus, we can find the number of pairs of cows who share subsets of size 1, size 2, size 3, size 4, and size 5. Now, we use PIE to calculate the number of compatible pairs, which can easily be turned into our answer. By PIE the compatible cows are subsetSum1 - subsetSum2 + subsetSum3 - subsetSum4 + subsetSum 5.
 
+CowPoetry
+More dp
+If we know the number of ways to end a line with every rhyme class, and we know the amount of times every rhyme class shows up in the overall scheme, then we can calculate the answer. For example, in the sample case there are 8 ways to end with r1 and 4 ways to end with r2. R1 shows up twice, and r2 shows up once, so the final answer is (r1 ^ f1)(r1 ^ f2) + (r2 ^ f1)(r1 ^ f2) + (r1 ^ f1)(r2 ^ f2) + (r2 ^ f1)(r2 ^ f2) which factors into (r1 ^ f1 + r2 ^ f1)(r1 ^ f2 + r2 ^ f2). Keep in mind that a scheme of ABA only means that A lines end with the same thing, and B lines end with the same thing, not that B lines and A lines have to end with different things. Calculating f's is straightforwards, but calculating r's will need to use dp.
+First, we run a standard dp to see the number of ways to build a line with i syllables with dp[i]
+i = 1 : K + 1
+        j = 1 : N
+                syllables = words[j].syllables
+                rhyme = words[j].rhyme
+                if i + syllables > K
+                        continue
+		if i + syllables == K
+			rhymes[rhyme] = rhymes[rhyme] + dp[i]
+		dp[i + syllables] = dp[i + syllables] + dp[i]
+Apart from using dp to calculate rhymes, which is not an obvious technique, this is pretty textbook
+
 Dream
 
 Feast
