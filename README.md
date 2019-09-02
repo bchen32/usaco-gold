@@ -149,6 +149,10 @@ i = 1 : K + 1
 		dp[i + syllables] = dp[i + syllables] + dp[i]
 Apart from using dp to calculate rhymes, which is not an obvious technique, this is pretty textbook
 
+Dining
+
+Dishwashing
+
 Dream
 
 Feast
