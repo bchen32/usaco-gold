@@ -138,8 +138,8 @@ CowPoetry
 More dp
 If we know the number of ways to end a line with every rhyme class, and we know the amount of times every rhyme class shows up in the overall scheme, then we can calculate the answer. For example, in the sample case there are 8 ways to end with r1 and 4 ways to end with r2. R1 shows up twice, and r2 shows up once, so the final answer is (r1 ^ f1)(r1 ^ f2) + (r2 ^ f1)(r1 ^ f2) + (r1 ^ f1)(r2 ^ f2) + (r2 ^ f1)(r2 ^ f2) which factors into (r1 ^ f1 + r2 ^ f1)(r1 ^ f2 + r2 ^ f2). Keep in mind that a scheme of ABA only means that A lines end with the same thing, and B lines end with the same thing, not that B lines and A lines have to end with different things. Calculating f's is straightforwards, but calculating r's will need to use dp.
 First, we run a standard dp to see the number of ways to build a line with i syllables with dp[i]
-i = 1 : K + 1
-        j = 1 : N
+i = 0 : K + 1
+        j = 0 : N
                 syllables = words[j].syllables
                 rhyme = words[j].rhyme
                 if i + syllables > K
@@ -150,10 +150,25 @@ i = 1 : K + 1
 Apart from using dp to calculate rhymes, which is not an obvious technique, this is pretty textbook
 
 Dining
+Dijkstra with a twist
+First, run dijkstra from the home barn to calculate all distances with no haybales.
+Going to a haybale is like subtracting the yumminess value of the haybale from your distance traveled. So in order to calculate the "after" values we will create a new fictitious node and create edges between it and all haybales. These edges should have weight before[haybale] - haybale yumminess. Then run dijkstra from this new fictitious node. This essentially forces all cows to go through a haybale. Then, we can simply compare the before and afters for the answer.
 
 Dishwashing
+Another kind of weird simulation problem
+First realize, that if we are placing a plate x, then x should be in the leftmost stack where all plates to the left are smaller than x. This becomes a little trickier if the top plate on that optimal stack is also less than x. In that case, we need to clear out the stacks until x can be placed. If x is less than the greatest plate which has been cleaned by elsie so far, then we stop.
+     |?|
+|1|  |4|  |7|
+|2|  |6|  |9|  |10|  |15|
+There are also a few implementation tricks for this. We will keep track of the soapy stacks as an array of LinkedLists. To quickly know what the optimal stack is, we maintain an array placeStack[N + 1] where placeStack[i] tells us the index of the optimal stack for i.
+i = 0 : N
+	toPlace = plates[i]
+	j = toPlace : 0 and placeStack[j] == 0
+		placeStack[j] = toPlace
+The exact mechanics of placeStack are hard to explain, but working through a few examples yourself will probably make it somewhat clear.
 
 Dream
+Another weird bfs. Fairly straightforwards though, just a pain to implement.
 
 Feast
 
