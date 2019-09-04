@@ -171,6 +171,11 @@ Dream
 Another weird bfs. Fairly straightforwards though, just a pain to implement.
 
 Feast
+Basic knapsack with one modification.
+State - dp[0][t] is true if Bessie can reach t fullness without drinking, and dp[1][t] is the same, but if Bessie has drunk
+Transition is really straightforwards, and is left as an excercise to the reader.
+
+FencedIn
 
 FileDirectory
 
