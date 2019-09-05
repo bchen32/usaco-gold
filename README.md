@@ -173,11 +173,30 @@ Another weird bfs. Fairly straightforwards though, just a pain to implement.
 Feast
 Basic knapsack with one modification.
 State - dp[0][t] is true if Bessie can reach t fullness without drinking, and dp[1][t] is the same, but if Bessie has drunk
-Transition is really straightforwards, and is left as an excercise to the reader.
+Transition is really straightforwards, and is left as an excercise to the reader. Just make sure to compute dp[0] first.
 
 FencedIn
+Textbook MST
+Kruskal's or Prim's will both run in time
+Tricky thing is converting the graph into something which can be processed by an MST alg. This can be done in O(NM) time and runs just fast enough to stay in the limit.
 
 FileDirectory
+Another cancerous graph problem. We calculate subtrees and supertrees separately, giving this a similar feel to CowAtLarge. This is necessary because up and down weights aren't the same. Maintain arrays of subNodes and superNodes, where nodes are defined by the total distance to all files in their sub/supertree and the number of files in their sub/supertree. We first run dfs using iterative post order traversal of a stack and update subNodes as we do it. Specifically, we loop through each nodes children and update sum and numSubfiles of the current node this way. Work this manually if the formula isn't clear.
+
+sum += child.numFiles * (names[i].length() + 1) + child.sum
+numSubfiles += child.numFiles
+
+The formula for supertree is a lot more complex. This, time, we are using an iterative preorder traversal. At every step, we update the current node's children in the following way. There is a baseline sum, which is simply the curr node's super and subtree sums added together. But, to get the supertree sum for a child, we need to subtract the child's own sum from the baseline, as well as the child folder's name and the ../ contributed by that child folder. The child's numSuperfiles is simply the sum of the curr nodes super and sub files, but subtracting the child's own files. The easiest way to understand is to work some examples on your own.
+
+aSuper = supertreeFDNodes[curr]
+aSub = subtreeFDNodes[curr]
+baselineSum = aSuper.sum + (3 * aSuper.numFiles) + aSub.sum + (3 * aSub.numFiles)
+i : adjList[curr]
+	bSub = subtreeFDNodes[i]
+	numSuperfiles = aSuper.numFiles + aSub.numFiles - bSub.numFiles
+	sum = baselineSum -bSub.sum - (bSub.numFiles * (names[i].length() + 4))
+	
+The node with the best combined super and sub sum is the best node.
 
 HPS
 
