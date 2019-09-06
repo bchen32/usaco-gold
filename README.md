@@ -198,7 +198,17 @@ i : adjList[curr]
 	
 The node with the best combined super and sub sum is the best node.
 
+HaybaleFeast
+Two pointers problem
+Pretty straightforwards when you realize that it's two pointers. Not all problems have to be complex. Maintain 2 pointers, which represent either end of your interval. Loop the right pointer from 0 to N, and increment the left pointer as long as the total flavor is > M. In order to keep track of the maximum spiciness over a given interval, we also maintain a treeset of haybales, sorted by spiciness.
+
 HPS
+More dp problems
+State is dp[m][k][n] where m is Bessie's current move, k is the number of changes Bessie has made, and n is the number of games played
+Transition is straightforwards so it's going to be left as an excercise for the reader.
+
+Lasers
+In a somewhat unintuitive turn of events, the fence posts in this problem are actually the edges, while the lines are vertices.
 
 MooCast
 
