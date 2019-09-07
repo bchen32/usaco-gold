@@ -223,7 +223,17 @@ Barn <----↑
           |
 Now that we know we only want to travel on a given line a single time, it starts to become clear why the lines are vertices and the fence posts are edges. Now the only challenge is converting the lines from (x = 100000000) or (y = 1295001) into vertex numbers so we can run bfs normally. Use a 2 hashmaps<coord, vertex num> to convert vertical/horizontal lines separately.
 
+LightsOut
+Just simulate the problem
+First calculate the shortest distance from each point to the exit in O(N) to get the distances in a lit barn. Then, loop through each point as a start point, maintaining a list of possible points as well as distance travelled, and move clockwise until the list is empty or the point has reached the exit. If the list is empty before Bessie reaches the exit, then just add the lit distance from the current point to the exit. This runs in O(N^2). Then just compare the dark distances to the lit distances.
+
+MilkingOrder
+Binary Search and Topological Sort
+We want the most amount of conditions which can still construct a valid topological sort, and we want the lexicographically smallest topological sort. Because we want to use the first X conditions, we can simply run a binary search on X, and at every step check if a topological sort is possible.
+
 MooCast
+Textbook DSU problem
+We are asked to find the maximum edge value needed to let us connect all cows. This can be done by looping over all pairs of cows in O(N^2) and generating edges between them. Then, after sorting the edge list from smallest to largest, we loop through all edges, and if they aren't already connected, then we connect them and update the maximum edge value.
 
 MooTube
 
