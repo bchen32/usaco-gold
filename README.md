@@ -208,7 +208,20 @@ State is dp[m][k][n] where m is Bessie's current move, k is the number of change
 Transition is straightforwards so it's going to be left as an excercise for the reader.
 
 Lasers
-In a somewhat unintuitive turn of events, the fence posts in this problem are actually the edges, while the lines are vertices.
+In a somewhat unintuitive turn of events, the fence posts in this problem are actually the edges, while the lines are vertices. We need to realize that the laser will never revisit a given line. There is no situation where something like this is desirable.
+      ↑------>|	
+      |       |
+----->|       ↓--------> Barn
+This obviously doesn't accomplish anything. But, you might ask, what if we want to make the laser go backwards?
+              ↑------->|
+Barn ↑------->|   <----↓
+     |
+     |
+But this is also pointless, because we could've simply done this.
+Barn <----↑
+          |
+          |
+Now that we know we only want to travel on a given line a single time, it starts to become clear why the lines are vertices and the fence posts are edges. Now the only challenge is converting the lines from (x = 100000000) or (y = 1295001) into vertex numbers so we can run bfs normally. Use a 2 hashmaps<coord, vertex num> to convert vertical/horizontal lines separately.
 
 MooCast
 
