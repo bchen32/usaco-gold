@@ -236,6 +236,22 @@ Textbook DSU problem
 We are asked to find the maximum edge value needed to let us connect all cows. This can be done by looping over all pairs of cows in O(N^2) and generating edges between them. Then, after sorting the edge list from smallest to largest, we loop through all edges, and if they aren't already connected, then we connect them and update the maximum edge value.
 
 MooTube
+Another textbook DSU
+Sort edges from largest to smallest relevance, and sort queries from largest to smallest threshold. We maintain a DSU, and whenever an edge is valid, we add it. We check the size of the connected component at every query, and that's our answer.
+
+NoCross
+Dp problem
+I did this iteratively, but recursively might be much more intuitive.
+State dp[i][j] is the max number of crosswalks which can be built using i from the left side of the road and j from the right side
+Transition is dp[i][j] = max(dp[i - 1][j - 1] + abs(fields[0][i] - fields[1][j]) <= 4 ? 1 : 0, dp[i - 1][j], dp[i][j - 1])
+Either we can go to dp[i - 1][j - 1] and then try to add a new crosswalk, or just go to dp[i - 1][j] or dp[j - 1][i] without adding anything.
+
+OutOfSorts
+Difficult BIT problem
+Bessie's sort algorithm basically drags one non sorted item from left to right, and one from right to left. We create a number that can measure how many values need to move from left to right and vice versa at a given point. If we a draw lines between every position i and i + 1, then measure how many values to the left of that line in the original input are supposed to be to the right of the input, we can get the amount of flow that needs to happen to "sort" the array from the perspective of that line. The answer to the problem is simply just the maximum out of those values, or 1 in the case that the array is already sorted. To calculate that, we use a BIT to calculate the number of items to the left of a given line which should've been there but aren't.
+1|8|5|3|2
+1|2|3|5|8
+ 0 1 2 1
 
 PieForPie
 
