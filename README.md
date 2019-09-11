@@ -252,13 +252,60 @@ Bessie's sort algorithm basically drags one non sorted item from left to right, 
 1|8|5|3|2
 1|2|3|5|8
  0 1 2 1
+ 
+PalPath
+Hard dp
+Because palindromes are symmetrical, we know the palindrome's middle needs to be in the middle diagonal (feel free to convince yourself of this on paper). This means that our dp needs to go iteratively outwards from diagonals. Another catch is that one we know which diagonal we are on, we only need to know the row to determine the column position, thus letting us only store one part of the current pos.
+Number of palindromes starting at row i and ending at row j is dp[i][j].
+for (int i = N - 1; i >= 1; i--) {
+long[][] next = new long[N][N];
+int j = 0 : N
+	int rA = j
+	int cA = i - j - 1
+	if cA < 0
+		break
+	k = 0 : N
+		rB = k
+		cB = 2 * N - i - rB - 1
+		if cB >= N || grid[rA][cA] != grid[rB][cB]
+			continue
+		next[rA][rB] += dp[rA][rB]
+		if rA + 1 < N
+			next[rA][rB] += dp[rA + 1][rB]
+		if rB - 1 >= 0
+			next[rA][rB] += dp[rA][rB - 1]
+		if rA + 1 < N && rB - 1 >= 0
+			next[rA][rB] += dp[rA + 1][rB - 1]
+		next[rA][rB] %= MOD
+	dp = next
 
 PieForPie
+BFS + binary search
+This is really just a multi source bfs problem, where we want to know the shortest distance to each of the ending pies. We also need a fast way to find a valid pie to give, which we do with binary search.
 
 Radio
+Recursive dp problem
+Minimum energy used after f steps from farmer John and c steps from Bessie is dp[f][c]
+Transition is pretty straight forwards recursive dp
+
+Shortcut
+Dijkstra Problem
+If we calculate the distance of all fields to the barn and also the number of cows who pass through each field, then we can calculate the distance saved by each shortcut as (distBefore[i] - T) * numCows[i]. The simplest way to calculate number of cows who pass through each field is to record the parent of each node in the shortest path tree, and then run O(N) backtracking on every node.
+
+SleepySort
+BIT problem
+First of all, if the last x numbers are in order, then k = n - x. After finding the length of K, we want to figure out the instructions for each cow. The amount of spaces each cow needs to move is the number of cows between it and the start of the sorted sub interval, which can be calculated with index subtraction, and the number of cows who are already in the sorted sub interval and smaller, which is calculated with BIT.
+
+Snakes
+Another dp problem
+Minimum wasted space with i snakes, j net changes, and with current net size of snakes[k] is dp[i][j][k]
+Looping through each snake h and setting current net size as snakes[h], the min amount of wasted space if we don't change net size is dp[n - 1][k][h] + snakes[h] - snakes[n - 1]
+If we do change net size, then it's bestVal + snakes[h] - snakes[n - 1] where bestVal is the minimum of dp[n - 1][k - 1][x] and x loops 0 through N
+
+Snowboots
+Two pointers problem
+Sort the tiles and boots by depth, then loop through the boots from deepest and farthest to shallowest and shortest. At every step, remove tiles until the deepest tile can be stepped in by the current boot. Then, keep track of the "gaps" in the path, by using a separate TreeSet of tiles, which sorts tiles by index. When removing the deepest tile, also remove it from the index sorted list, and then take the ceiling and floor to find the gap size. If the boot can cross the biggest gap, then it can make it all the way.
 
 Split
-
-Talent
-
-VisitFarmer
+Line sweep
+First realize that there must be some line that is horizontal or vertical that separates the cows optimally. Do a line sweep vertically first, using TreeMaps to keep track of the heights (the width of the enclosures are fixed on the vertical line). Then reflect everything over y = x and run another vertical sweep (the same thing as running a horizontal sweep) and take the best value.
