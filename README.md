@@ -313,6 +313,7 @@ First realize that there must be some line that is horizontal or vertical that s
 StampPainting
 More dp
 
+
 Talent
 Dp
 The minimum weight for i talent is dp[i]
@@ -330,7 +331,6 @@ Teamwork
 Even more dp
 The max sum of skills of the first i cows is dp[i]
 If the last team has a size of x, then dp[i] = dp[i - x] + highestSkillInLastTeam * numCowsInLastTeam
-
 
 VisitFarmer
 Basically just BFS, keep track of how many times Bessie can move before eating again
