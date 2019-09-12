@@ -309,3 +309,27 @@ Sort the tiles and boots by depth, then loop through the boots from deepest and 
 Split
 Line sweep
 First realize that there must be some line that is horizontal or vertical that separates the cows optimally. Do a line sweep vertically first, using TreeMaps to keep track of the heights (the width of the enclosures are fixed on the vertical line). Then reflect everything over y = x and run another vertical sweep (the same thing as running a horizontal sweep) and take the best value.
+
+StampPainting
+More dp
+
+Talent
+Dp
+The minimum weight for i talent is dp[i]
+i = 0 : N
+	j = maxTalent : talent[i] - 1
+		dp[j] = Math.min(dp[j], dp[j - talent[i]] + weights[i])
+Pretty standard knapsack
+
+Taming
+Another pretty standard dp
+Minimum altered logs after i days, last breakout at j, and k total breakouts is dp[i][j][k]
+N is less than 100, so the transition is pretty bashy. It's easy enough to figure out on your own.
+
+Teamwork
+Even more dp
+The max sum of skills of the first i cows is dp[i]
+If the last team has a size of x, then dp[i] = dp[i - x] + highestSkillInLastTeam * numCowsInLastTeam
+
+
+
