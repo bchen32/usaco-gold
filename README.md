@@ -332,4 +332,5 @@ The max sum of skills of the first i cows is dp[i]
 If the last team has a size of x, then dp[i] = dp[i - x] + highestSkillInLastTeam * numCowsInLastTeam
 
 
-
+VisitFarmer
+Basically just BFS, keep track of how many times Bessie can move before eating again
