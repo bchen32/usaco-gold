@@ -4,13 +4,11 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.math.BigInteger;
 import java.util.StringTokenizer;
 
 public class StampPainting {
 	
 	static final int MOD = 1000000007;
-	static final BigInteger bMOD = new BigInteger("1000000007");
 	
 	public static void main(String[] args) throws IOException {
 		// BufferedReader in = new BufferedReader(new FileReader("C:\\Users\\bench\\git\\USACO-Gold\\Gold\\StampPainting\\3.in"));
