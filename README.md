@@ -312,7 +312,10 @@ First realize that there must be some line that is horizontal or vertical that s
 
 StampPainting
 More dp
-
+The last stamp will always leave a consecutive interval of size K. Any other spot can basically have whatever color we want. We can stamp spot 1 with desired color, then stamp spot 2 with the desired color, going all the way down, and then back. This means that there only has to be one interval of K, and the rest of the units can be any color. So we use complementary counting where dp[i] is the number of ways to create a painting with a max consecutive interval of strictly less than K using the first i units. Then, subtract dp[N] from M ^ N for the actual answer.
+c = 1 : K
+	dp[i] += dp[i - c] * (M - 1)
+However, this is O(NK) time, and isn't fast enough for the whole solution. What if we had a separate array sums such that sums[i] = sum of dp[0] through dp[i]? Then we know that sums[i] = sums[i - 1] + dp[i]. We can rewrite dp[i] as (M - 1) * (sums[i] - sums[i - K]). Thus, after substitution we have that sums[i] = sums[i - 1] + (M - 1) * (sums[i] - sums[i - K]). This reduces our algorithm to O(N) time, and the answer now becomes M ^ N - (sums[i] - sums[i - 1]). The last thing to do, is to throw % MOD everywhere, where MOD = 1000000007 so as not to have overflow issues.
 
 Talent
 Dp
@@ -334,3 +337,6 @@ If the last team has a size of x, then dp[i] = dp[i - x] + highestSkillInLastTea
 
 VisitFarmer
 Basically just BFS, keep track of how many times Bessie can move before eating again
+
+Walk
+There is a hack math solution to solve in O(1), but I'm in USACO because I took Ls in AMC, so we're not doing that. Instead, we use an MST based solution. All we have to do to get the optimal split is to build an MST, and remove the K - 1 largest weights. Kruskal's is too slow, as this is a dense graph, so we use prim's
