@@ -8,10 +8,12 @@ import java.util.Arrays;
 import java.util.StringTokenizer;
 
 public class MooTube {
-	
+
 	public static void main(String[] args) throws IOException {
-		// BufferedReader in = new BufferedReader(new FileReader("C:\\Users\\bench\\git\\USACO-Gold\\Gold\\MooTube\\1.in"));
-		// BufferedReader in = new BufferedReader(new FileReader("H:\\git\\USACO-Gold\\Gold\\MooTube\\1.in"));
+		// BufferedReader in = new BufferedReader(new
+		// FileReader("C:\\Users\\bench\\git\\USACO-Gold\\Gold\\MooTube\\1.in"));
+		// BufferedReader in = new BufferedReader(new
+		// FileReader("H:\\git\\USACO-Gold\\Gold\\MooTube\\1.in"));
 		BufferedReader in = new BufferedReader(new FileReader("mootube.in"));
 		PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("mootube.out")));
 		StringTokenizer tk = new StringTokenizer(in.readLine());
@@ -55,32 +57,30 @@ public class MooTube {
 
 class MTEdge implements Comparable<MTEdge> {
 	public int v1, v2, w;
-	
+
 	public MTEdge(int v1, int v2, int w) {
 		this.v1 = v1;
 		this.v2 = v2;
 		this.w = w;
 	}
-	
+
 	@Override
 	public int compareTo(MTEdge o) {
-		// TODO Auto-generated method stub
 		return Integer.compare(o.w, w);
 	}
 }
 
 class MTQuery implements Comparable<MTQuery> {
 	public int threshold, start, num;
-	
+
 	public MTQuery(int threshold, int start, int num) {
 		this.threshold = threshold;
 		this.start = start;
 		this.num = num;
 	}
-	
+
 	@Override
 	public int compareTo(MTQuery o) {
-		// TODO Auto-generated method stub
 		return Integer.compare(o.threshold, threshold);
 	}
 }
@@ -89,7 +89,7 @@ class MTDisjointSet {
 	int[] arr;
 	int[] size;
 	int N;
-	
+
 	public MTDisjointSet(int N) {
 		this.N = N;
 		arr = new int[N];
@@ -99,7 +99,7 @@ class MTDisjointSet {
 			arr[i] = i;
 		}
 	}
-	
+
 	public int root(int curr) {
 		while (arr[curr] != curr) {
 			arr[curr] = arr[arr[curr]];
@@ -107,14 +107,14 @@ class MTDisjointSet {
 		}
 		return curr;
 	}
-	
+
 	public boolean find(int a, int b) {
 		if (root(a) == root(b)) {
 			return true;
 		}
 		return false;
 	}
-	
+
 	public void union(int a, int b) {
 		int aRoot = root(a);
 		int bRoot = root(b);

@@ -8,18 +8,20 @@ import java.util.Arrays;
 import java.util.StringTokenizer;
 
 public class FencedIn {
-	
+
 	int N;
 	int E;
-	
+
 	public FencedIn(int N, int E) {
 		this.N = N;
 		this.E = E;
 	}
-	
+
 	public static void main(String[] args) throws IOException {
-		// BufferedReader in = new BufferedReader(new FileReader("C:\\Users\\bench\\git\\USACO-Gold\\Gold\\FixedIn\\1.in"));
-		// BufferedReader in = new BufferedReader(new FileReader("H:\\git\\USACO-Gold\\Gold\\FixedIn\\1.in"));
+		// BufferedReader in = new BufferedReader(new
+		// FileReader("C:\\Users\\bench\\git\\USACO-Gold\\Gold\\FixedIn\\1.in"));
+		// BufferedReader in = new BufferedReader(new
+		// FileReader("H:\\git\\USACO-Gold\\Gold\\FixedIn\\1.in"));
 		BufferedReader in = new BufferedReader(new FileReader("fencedin.in"));
 		PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("fencedin.out")));
 		StringTokenizer tk = new StringTokenizer(in.readLine());
@@ -70,7 +72,7 @@ public class FencedIn {
 		out.close();
 		in.close();
 	}
-	
+
 	public long kruskal(Edge[] edges) {
 		DS ds = new DS(N);
 		int edgesAdded = 0;
@@ -87,12 +89,12 @@ public class FencedIn {
 		}
 		return totalWeight;
 	}
-	
+
 	static class DS {
 		int[] arr;
 		int[] size;
 		int N;
-		
+
 		public DS(int N) {
 			this.N = N;
 			arr = new int[N];
@@ -102,7 +104,7 @@ public class FencedIn {
 				arr[i] = i;
 			}
 		}
-		
+
 		public int root(int curr) {
 			while (arr[curr] != curr) {
 				arr[curr] = arr[arr[curr]];
@@ -110,14 +112,14 @@ public class FencedIn {
 			}
 			return curr;
 		}
-		
+
 		public boolean find(int a, int b) {
 			if (root(a) == root(b)) {
 				return true;
 			}
 			return false;
 		}
-		
+
 		public void union(int a, int b) {
 			int aRoot = root(a);
 			int bRoot = root(b);
@@ -131,21 +133,20 @@ public class FencedIn {
 			}
 		}
 	}
-	
+
 	static class Edge implements Comparable<Edge> {
 		int source;
 		int dest;
 		int weight;
-		
+
 		public Edge(int s, int d, int w) {
 			source = s;
 			dest = d;
 			weight = w;
 		}
-		
+
 		@Override
 		public int compareTo(Edge o) {
-			// TODO Auto-generated method stub
 			return Integer.compare(this.weight, o.weight);
 		}
 	}

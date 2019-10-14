@@ -7,10 +7,12 @@ import java.io.PrintWriter;
 import java.util.Arrays;
 
 public class Circlecross {
-	
+
 	public static void main(String[] args) throws IOException {
-		// BufferedReader in = new BufferedReader(new FileReader("C:\\Users\\bench\\git\\USACO-Gold\\Gold\\Circlecross\\1.in"));
-		// BufferedReader in = new BufferedReader(new FileReader("H:\\git\\USACO-Gold\\Gold\\Circlecross\\1.in"));
+		// BufferedReader in = new BufferedReader(new
+		// FileReader("C:\\Users\\bench\\git\\USACO-Gold\\Gold\\Circlecross\\1.in"));
+		// BufferedReader in = new BufferedReader(new
+		// FileReader("H:\\git\\USACO-Gold\\Gold\\Circlecross\\1.in"));
 		BufferedReader in = new BufferedReader(new FileReader("circlecross.in"));
 		PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("circlecross.out")));
 		int N = Integer.parseInt(in.readLine());
@@ -34,7 +36,7 @@ public class Circlecross {
 			BIT.update(input[i].secondInd, 1);
 		}
 		out.println(ans);
-		
+
 		out.close();
 		in.close();
 	}
@@ -43,15 +45,14 @@ public class Circlecross {
 class CircleSort implements Comparable<CircleSort> {
 	int firstInd;
 	int secondInd;
-	
+
 	public CircleSort(int firstInd, int secondInd) {
 		this.firstInd = firstInd;
 		this.secondInd = secondInd;
 	}
-	
+
 	@Override
 	public int compareTo(CircleSort o) {
-		// TODO Auto-generated method stub
 		return Integer.compare(this.firstInd, o.firstInd);
 	}
 }
@@ -59,12 +60,12 @@ class CircleSort implements Comparable<CircleSort> {
 class CircleBIT {
 	int BIT[];
 	int N;
-	
+
 	public CircleBIT(int N) {
 		this.N = N;
 		BIT = new int[N + 1];
 	}
-	
+
 	public int get(int index) {
 		int sum = 0;
 		index++;
@@ -74,7 +75,7 @@ class CircleBIT {
 		}
 		return sum;
 	}
-	
+
 	public void update(int index, int val) {
 		index++;
 		while (index <= N) {

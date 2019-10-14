@@ -9,13 +9,14 @@ import java.util.PriorityQueue;
 import java.util.StringTokenizer;
 
 public class VisitFarmer {
-	
+
 	public static final int[] dirR = { 0, 0, 1, -1 };
 	public static final int[] dirC = { 1, -1, 0, 0 };
 	public int N;
-	
+
 	public static void main(String[] args) throws IOException {
-		// BufferedReader in = new BufferedReader(new FileReader("C:\\Users\\bench\\git\\USACO-Gold\\Gold\\VisitFarmer\\1.in"));
+		// BufferedReader in = new BufferedReader(new
+		// FileReader("C:\\Users\\bench\\git\\USACO-Gold\\Gold\\VisitFarmer\\1.in"));
 		BufferedReader in = new BufferedReader(new FileReader("visitfj.in"));
 		PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("visitfj.out")));
 		StringTokenizer ln = new StringTokenizer(in.readLine());
@@ -75,20 +76,20 @@ class FJState implements Comparable<FJState> {
 	int c;
 	int timeUsed;
 	int fieldMod;
-	
+
 	public FJState(int a, int b, int t, int d) {
 		r = a;
 		c = b;
 		timeUsed = t;
 		fieldMod = d;
 	}
-	
+
 	@Override
 	public boolean equals(Object o) {
 		FJState other = (FJState) o;
 		return this.r == other.r && this.c == other.c && this.fieldMod == other.fieldMod;
 	}
-	
+
 	@Override
 	public int hashCode() {
 		int hash = 7;
@@ -97,10 +98,9 @@ class FJState implements Comparable<FJState> {
 		hash = 31 * hash + fieldMod;
 		return hash;
 	}
-	
+
 	@Override
 	public int compareTo(FJState other) {
-		// TODO Auto-generated method stub
 		return Integer.compare(this.timeUsed, other.timeUsed);
 	}
 }

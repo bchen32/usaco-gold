@@ -12,21 +12,23 @@ import java.util.Queue;
 import java.util.StringTokenizer;
 
 public class Dining {
-	
+
 	static final int INF = 1 << 30;
-	
+
 	int N;
 	LinkedList<DEdge>[] adjList;
-	
+
 	public Dining(int N, LinkedList<DEdge>[] adjList) {
 		this.N = N;
 		this.adjList = adjList;
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	public static void main(String[] args) throws IOException {
-		// BufferedReader in = new BufferedReader(new FileReader("C:\\Users\\bench\\git\\USACO-Gold\\Gold\\Dining\\2.in"));
-		// BufferedReader in = new BufferedReader(new FileReader("H:\\git\\USACO-Gold\\Gold\\Dining\\1.in"));
+		// BufferedReader in = new BufferedReader(new
+		// FileReader("C:\\Users\\bench\\git\\USACO-Gold\\Gold\\Dining\\2.in"));
+		// BufferedReader in = new BufferedReader(new
+		// FileReader("H:\\git\\USACO-Gold\\Gold\\Dining\\1.in"));
 		BufferedReader in = new BufferedReader(new FileReader("dining.in"));
 		PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("dining.out")));
 		StringTokenizer tk = new StringTokenizer(in.readLine());
@@ -62,7 +64,7 @@ public class Dining {
 		out.close();
 		in.close();
 	}
-	
+
 	public int[] dijkstraAdjList(int root, int SZ) {
 		Queue<DNode> heap = new PriorityQueue<DNode>();
 		int[] dist = new int[SZ];
@@ -70,7 +72,7 @@ public class Dining {
 		boolean[] inSet = new boolean[SZ];
 		heap.add(new DNode(root, 0));
 		dist[root] = 0;
-		
+
 		while (!heap.isEmpty()) {
 			int u = heap.poll().num;
 			inSet[u] = true;
@@ -96,15 +98,14 @@ public class Dining {
 class DNode implements Comparable<DNode> {
 	int num;
 	int dist;
-	
+
 	public DNode(int num, int dist) {
 		this.num = num;
 		this.dist = dist;
 	}
-	
+
 	@Override
 	public int compareTo(DNode other) {
-		// TODO Auto-generated method stub
 		if (this.dist == other.dist) {
 			return Integer.compare(this.num, other.num);
 		}
@@ -115,7 +116,7 @@ class DNode implements Comparable<DNode> {
 class DEdge {
 	int other;
 	int weight;
-	
+
 	public DEdge(int o, int w) {
 		other = o;
 		weight = w;

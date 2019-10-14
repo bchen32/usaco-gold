@@ -7,10 +7,12 @@ import java.io.PrintWriter;
 import java.util.Arrays;
 
 public class OutOfSorts {
-	
+
 	public static void main(String[] args) throws IOException {
-		// BufferedReader in = new BufferedReader(new FileReader("C:\\Users\\bench\\git\\USACO-Gold\\Gold\\OutOfSorts\\1.in"));
-		// BufferedReader in = new BufferedReader(new FileReader("H:\\git\\USACO-Gold\\Gold\\OutOfSorts\\1.in"));
+		// BufferedReader in = new BufferedReader(new
+		// FileReader("C:\\Users\\bench\\git\\USACO-Gold\\Gold\\OutOfSorts\\1.in"));
+		// BufferedReader in = new BufferedReader(new
+		// FileReader("H:\\git\\USACO-Gold\\Gold\\OutOfSorts\\1.in"));
 		BufferedReader in = new BufferedReader(new FileReader("sort.in"));
 		PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("sort.out")));
 		int N = Integer.parseInt(in.readLine());
@@ -34,15 +36,14 @@ public class OutOfSorts {
 class OrigInd implements Comparable<OrigInd> {
 	int num;
 	int ind;
-	
+
 	public OrigInd(int num, int ind) {
 		this.num = num;
 		this.ind = ind;
 	}
-	
+
 	@Override
 	public int compareTo(OrigInd o) {
-		// TODO Auto-generated method stub
 		return Integer.compare(this.num, o.num);
 	}
 }
@@ -50,12 +51,12 @@ class OrigInd implements Comparable<OrigInd> {
 class SortBIT {
 	int BIT[];
 	int N;
-	
+
 	public SortBIT(int N) {
 		this.N = N;
 		BIT = new int[N + 1];
 	}
-	
+
 	public int get(int index) {
 		int sum = 0;
 		index++;
@@ -65,7 +66,7 @@ class SortBIT {
 		}
 		return sum;
 	}
-	
+
 	public void update(int index, int val) {
 		index++;
 		while (index <= N) {

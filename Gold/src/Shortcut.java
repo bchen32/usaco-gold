@@ -12,27 +12,29 @@ import java.util.Queue;
 import java.util.StringTokenizer;
 
 public class Shortcut {
-	
+
 	static final long INF = Long.MAX_VALUE;
-	
+
 	int N;
 	int T;
 	int[] numCows;
 	int[] parents;
 	int[] travelRecords;
 	LinkedList<SEdge>[] adjList;
-	
+
 	public Shortcut(int N, int T, int[] numCows, LinkedList<SEdge>[] adjList) {
 		this.N = N;
 		this.T = T;
 		this.numCows = numCows;
 		this.adjList = adjList;
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	public static void main(String[] args) throws IOException {
-		// BufferedReader in = new BufferedReader(new FileReader("C:\\Users\\bench\\git\\USACO-Gold\\Gold\\Shortcut\\2.in"));
-		// BufferedReader in = new BufferedReader(new FileReader("H:\\git\\USACO-Gold\\Gold\\Shortcut\\1.in"));
+		// BufferedReader in = new BufferedReader(new
+		// FileReader("C:\\Users\\bench\\git\\USACO-Gold\\Gold\\Shortcut\\2.in"));
+		// BufferedReader in = new BufferedReader(new
+		// FileReader("H:\\git\\USACO-Gold\\Gold\\Shortcut\\1.in"));
 		BufferedReader in = new BufferedReader(new FileReader("shortcut.in"));
 		PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("shortcut.out")));
 		StringTokenizer tk = new StringTokenizer(in.readLine());
@@ -61,7 +63,7 @@ public class Shortcut {
 		out.close();
 		in.close();
 	}
-	
+
 	public long solve() {
 		long[] distBefore = dijkstra(0);
 		travelRecords = new int[N];
@@ -75,14 +77,14 @@ public class Shortcut {
 		}
 		return bestSaved;
 	}
-	
+
 	public void retrace(int curr, int cow) {
 		while (curr != 0) {
 			travelRecords[curr] += numCows[cow];
 			curr = parents[curr];
 		}
 	}
-	
+
 	public long[] dijkstra(int root) {
 		Queue<SNode> heap = new PriorityQueue<SNode>();
 		long[] dist = new long[N];
@@ -93,7 +95,7 @@ public class Shortcut {
 		heap.add(new SNode(root, 0));
 		dist[root] = 0;
 		parents[root] = -1;
-		
+
 		while (!heap.isEmpty()) {
 			int u = heap.poll().num;
 			inSet[u] = true;
@@ -124,15 +126,14 @@ public class Shortcut {
 class SNode implements Comparable<SNode> {
 	int num;
 	long dist;
-	
+
 	public SNode(int num, long dist) {
 		this.num = num;
 		this.dist = dist;
 	}
-	
+
 	@Override
 	public int compareTo(SNode other) {
-		// TODO Auto-generated method stub
 		if (this.dist == other.dist) {
 			return Integer.compare(this.num, other.num);
 		}
@@ -143,7 +144,7 @@ class SNode implements Comparable<SNode> {
 class SEdge {
 	int other;
 	int weight;
-	
+
 	public SEdge(int o, int w) {
 		other = o;
 		weight = w;

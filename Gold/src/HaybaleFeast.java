@@ -8,10 +8,12 @@ import java.util.StringTokenizer;
 import java.util.TreeSet;
 
 public class HaybaleFeast {
-	
+
 	public static void main(String[] args) throws IOException {
-		// BufferedReader in = new BufferedReader(new FileReader("C:\\Users\\bench\\git\\USACO-Gold\\Gold\\HaybaleFeast\\4.in"));
-		// BufferedReader in = new BufferedReader(new FileReader("H:\\git\\USACO-Gold\\Gold\\HaybaleFeast\\1.in"));
+		// BufferedReader in = new BufferedReader(new
+		// FileReader("C:\\Users\\bench\\git\\USACO-Gold\\Gold\\HaybaleFeast\\4.in"));
+		// BufferedReader in = new BufferedReader(new
+		// FileReader("H:\\git\\USACO-Gold\\Gold\\HaybaleFeast\\1.in"));
 		BufferedReader in = new BufferedReader(new FileReader("hayfeast.in"));
 		PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("hayfeast.out")));
 		StringTokenizer tk = new StringTokenizer(in.readLine());
@@ -50,13 +52,13 @@ class Feastbale implements Comparable<Feastbale> {
 	int flavor;
 	int spice;
 	int ind;
-	
+
 	public Feastbale(int flavor, int spice, int ind) {
 		this.flavor = flavor;
 		this.spice = spice;
 		this.ind = ind;
 	}
-	
+
 	public boolean equals(Object other) {
 		Feastbale o = (Feastbale) other;
 		if (this.ind == o.ind) {
@@ -64,16 +66,15 @@ class Feastbale implements Comparable<Feastbale> {
 		}
 		return false;
 	}
-	
+
 	@Override
 	public int compareTo(Feastbale o) {
-		// TODO Auto-generated method stub
 		if (this.spice == o.spice) {
 			return Integer.compare(this.ind, o.ind);
 		}
 		return Integer.compare(o.spice, this.spice);
 	}
-	
+
 	@Override
 	public String toString() {
 		return flavor + " " + spice;

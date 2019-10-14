@@ -9,10 +9,12 @@ import java.util.StringTokenizer;
 import java.util.TreeSet;
 
 public class Snowboots {
-	
+
 	public static void main(String[] args) throws IOException {
-		// BufferedReader in = new BufferedReader(new FileReader("C:\\Users\\bench\\git\\USACO-Gold\\Gold\\Snowboots\\1.in"));
-		// BufferedReader in = new BufferedReader(new FileReader("H:\\git\\USACO-Gold\\Gold\\Snowboots\\1.in"));
+		// BufferedReader in = new BufferedReader(new
+		// FileReader("C:\\Users\\bench\\git\\USACO-Gold\\Gold\\Snowboots\\1.in"));
+		// BufferedReader in = new BufferedReader(new
+		// FileReader("H:\\git\\USACO-Gold\\Gold\\Snowboots\\1.in"));
 		BufferedReader in = new BufferedReader(new FileReader("snowboots.in"));
 		PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("snowboots.out")));
 		StringTokenizer tk = new StringTokenizer(in.readLine());
@@ -60,15 +62,14 @@ class SnowTile implements Comparable<SnowTile> {
 	int depth;
 	int ind;
 	boolean sortInd = false;
-	
+
 	public SnowTile(int d, int i) {
 		depth = d;
 		ind = i;
 	}
-	
+
 	@Override
 	public int compareTo(SnowTile o) {
-		// TODO Auto-generated method stub
 		if (!sortInd) {
 			if (this.depth == o.depth) {
 				return Integer.compare(this.ind, o.ind);
@@ -78,7 +79,7 @@ class SnowTile implements Comparable<SnowTile> {
 			return Integer.compare(this.ind, o.ind);
 		}
 	}
-	
+
 	@Override
 	public boolean equals(Object other) {
 		SnowTile o = (SnowTile) other;
@@ -93,16 +94,15 @@ class SnowBoot implements Comparable<SnowBoot> {
 	int depth;
 	int dist;
 	int ind;
-	
+
 	public SnowBoot(int depth, int dist, int i) {
 		this.depth = depth;
 		this.dist = dist;
 		ind = i;
 	}
-	
+
 	@Override
 	public int compareTo(SnowBoot o) {
-		// TODO Auto-generated method stub
 		if (this.depth == o.depth) {
 			return Integer.compare(o.dist, this.dist);
 		}

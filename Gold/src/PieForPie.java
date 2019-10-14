@@ -9,7 +9,7 @@ import java.util.LinkedList;
 import java.util.StringTokenizer;
 
 public class PieForPie {
-	
+
 	int N;
 	int D;
 	Pie[] bessie = new Pie[N];
@@ -18,7 +18,7 @@ public class PieForPie {
 	int[] d;
 	boolean[] visitedBessie;
 	boolean[] visitedElsie;
-	
+
 	public PieForPie(int N, int D, Pie[] bessie, Pie[] elsie) {
 		this.N = N;
 		this.D = D;
@@ -29,7 +29,7 @@ public class PieForPie {
 		visitedBessie = new boolean[N];
 		visitedElsie = new boolean[N];
 	}
-	
+
 	public int[] bfs() {
 		LinkedList<Pie> q = new LinkedList<Pie>();
 		for (int i = 0; i < N; i++) {
@@ -48,7 +48,7 @@ public class PieForPie {
 				visitedElsie[curr.num] = true;
 			}
 		}
-		
+
 		while (!q.isEmpty()) {
 			Pie curr = q.poll();
 			if (curr.bessie) {
@@ -77,13 +77,13 @@ public class PieForPie {
 		}
 		return t;
 	}
-	
+
 	public int lowerBound(Pie[] pies, int find) {
 		int min = 0;
 		int max = N;
 		int mid = -1;
 		boolean found = false;
-		
+
 		while (min < max) {
 			mid = (min + max) / 2;
 			Pie toTry = pies[mid];
@@ -108,10 +108,12 @@ public class PieForPie {
 		}
 		return Math.min(N - 1, min - 1);
 	}
-	
+
 	public static void main(String[] args) throws IOException {
-		// BufferedReader in = new BufferedReader(new FileReader("C:\\Users\\bench\\git\\USACO-Gold\\Gold\\PieForPie\\2.in"));
-		// BufferedReader in = new BufferedReader(new FileReader("H:\\git\\USACO-Gold\\Gold\\PieForPie\\1.in"));
+		// BufferedReader in = new BufferedReader(new
+		// FileReader("C:\\Users\\bench\\git\\USACO-Gold\\Gold\\PieForPie\\2.in"));
+		// BufferedReader in = new BufferedReader(new
+		// FileReader("H:\\git\\USACO-Gold\\Gold\\PieForPie\\1.in"));
 		BufferedReader in = new BufferedReader(new FileReader("piepie.in"));
 		PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("piepie.out")));
 		StringTokenizer tk = new StringTokenizer(in.readLine());
@@ -148,17 +150,16 @@ class Pie implements Comparable<Pie> {
 	int otherScore;
 	int num;
 	boolean bessie;
-	
+
 	public Pie(int score, int otherScore, int num, boolean bessie) {
 		this.score = score;
 		this.otherScore = otherScore;
 		this.num = num;
 		this.bessie = bessie;
 	}
-	
+
 	@Override
 	public int compareTo(Pie other) {
-		// TODO Auto-generated method stub
 		return Integer.compare(this.otherScore, other.otherScore);
 	}
 }

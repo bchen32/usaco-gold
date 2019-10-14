@@ -9,10 +9,12 @@ import java.util.StringTokenizer;
 import java.util.TreeMap;
 
 public class Split {
-	
+
 	public static void main(String[] args) throws IOException {
-		// BufferedReader in = new BufferedReader(new FileReader("C:\\Users\\bench\\git\\USACO-Gold\\Gold\\Split\\7.in"));
-		// BufferedReader in = new BufferedReader(new FileReader("H:\\git\\USACO-Gold\\Gold\\Split\\1.in"));
+		// BufferedReader in = new BufferedReader(new
+		// FileReader("C:\\Users\\bench\\git\\USACO-Gold\\Gold\\Split\\7.in"));
+		// BufferedReader in = new BufferedReader(new
+		// FileReader("H:\\git\\USACO-Gold\\Gold\\Split\\1.in"));
 		BufferedReader in = new BufferedReader(new FileReader("split.in"));
 		PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("split.out")));
 		StringTokenizer tk = new StringTokenizer(in.readLine());
@@ -35,12 +37,12 @@ public class Split {
 class SplitSolver {
 	private int N;
 	private SplitNode[] SplitNodes;
-	
+
 	public SplitSolver(int N, SplitNode[] SplitNodes) {
 		this.N = N;
 		this.SplitNodes = SplitNodes;
 	}
-	
+
 	public long savedX() {
 		TreeMap<Long, Integer> mapL = new TreeMap<Long, Integer>();
 		TreeMap<Long, Integer> mapR = new TreeMap<Long, Integer>();
@@ -59,13 +61,13 @@ class SplitSolver {
 				update(mapR, SplitNodes[toAdd].y, -1);
 				update(mapL, SplitNodes[toAdd].y, 1);
 			}
-			bestArea = Math.min(bestArea,
-					(SplitNodes[line].x - SplitNodes[0].x) * (mapL.lastKey() - mapL.firstKey()) + (SplitNodes[N - 1].x - SplitNodes[next].x) * (mapR.lastKey() - mapR.firstKey()));
+			bestArea = Math.min(bestArea, (SplitNodes[line].x - SplitNodes[0].x) * (mapL.lastKey() - mapL.firstKey())
+					+ (SplitNodes[N - 1].x - SplitNodes[next].x) * (mapR.lastKey() - mapR.firstKey()));
 			line = next;
 		}
 		return maxArea - bestArea;
 	}
-	
+
 	private void update(TreeMap<Long, Integer> m, long k, int v) {
 		if (!m.containsKey(k)) {
 			m.put(k, 0);
@@ -77,7 +79,7 @@ class SplitSolver {
 			m.put(k, n);
 		}
 	}
-	
+
 	public long savedY() {
 		for (SplitNode curr : SplitNodes) {
 			curr.reflect();
@@ -90,21 +92,20 @@ class SplitSolver {
 class SplitNode implements Comparable<SplitNode> {
 	public int x;
 	public int y;
-	
+
 	public SplitNode(int x, int y) {
 		this.x = x;
 		this.y = y;
 	}
-	
+
 	public void reflect() {
 		int temp = x;
 		x = y;
 		y = temp;
 	}
-	
+
 	@Override
 	public int compareTo(SplitNode arg0) {
-		// TODO Auto-generated method stub
 		return Integer.compare(this.x, arg0.x);
 	}
 }
