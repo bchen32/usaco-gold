@@ -8,12 +8,14 @@ import java.util.Arrays;
 import java.util.StringTokenizer;
 
 public class Walk {
-	
+
 	static int N;
-	
+
 	public static void main(String[] args) throws IOException {
-		// BufferedReader in = new BufferedReader(new FileReader("C:\\Users\\bench\\git\\USACO-Gold\\Gold\\Walk\\1.in"));
-		// BufferedReader in = new BufferedReader(new FileReader("H:\\git\\USACO-Gold\\Gold\\Walk\\1.in"));
+		// BufferedReader in = new BufferedReader(new
+		// FileReader("C:\\Users\\bench\\git\\USACO-Gold\\Gold\\Walk\\1.in"));
+		// BufferedReader in = new BufferedReader(new
+		// FileReader("H:\\git\\USACO-Gold\\Gold\\Walk\\1.in"));
 		BufferedReader in = new BufferedReader(new FileReader("walk.in"));
 		PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("walk.out")));
 		StringTokenizer tk = new StringTokenizer(in.readLine());
@@ -32,20 +34,20 @@ public class Walk {
 		out.close();
 		in.close();
 	}
-	
+
 	static long[] prim(long adjMat[][]) {
-		
+
 		long key[] = new long[N];
 		Arrays.fill(key, Long.MAX_VALUE);
-		
+
 		boolean inSet[] = new boolean[N];
-		
+
 		key[0] = 0;
-		
+
 		for (int count = 0; count < N - 1; count++) {
 			long min = Long.MAX_VALUE;
 			int minIndex = -1;
-			
+
 			for (int v = 0; v < N; v++) {
 				if (!inSet[v] && key[v] < min) {
 					min = key[v];
