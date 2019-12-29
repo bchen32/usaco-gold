@@ -105,37 +105,15 @@ public class Gangs {
 			gangs.add(new Gang(i, numCows[i]));
 		}
 		while (gangs.size() > 1) {
-			if (gangs.size() == 3) {
-				Gang big1 = gangs.poll();
-				Gang big2 = gangs.poll();
-				Gang small = gangs.poll();
-				if (big1.num == big2.num && small.num % 2 == 0) {
-					gangs.clear();
-					break;
-				}
-				gangs.add(big1);
-				gangs.add(big2);
-				gangs.add(small);
-			}
-			if (gangs.size() == 4) {
-				Gang big1 = gangs.poll();
-				Gang big2 = gangs.poll();
-				Gang big3 = gangs.poll();
-				Gang small = gangs.poll();
-				if (big1.num == big2.num && big2.num == big3.num && small.num % 2 == 1) {
-					gangs.clear();
-					break;
-				}
-				gangs.add(big1);
-				gangs.add(big2);
-				gangs.add(big3);
-				gangs.add(small);
-			}
 			Gang bigger = gangs.poll();
 			Gang smaller = gangs.poll();
-			bigger.num -= smaller.num;
+			bigger.num--;
+			smaller.num--;
 			if (bigger.num > 0) {
 				gangs.add(bigger);
+			}
+			if (smaller.num > 0) {
+				gangs.add(smaller);
 			}
 		}
 		biggestL = gangs.poll();
