@@ -46,9 +46,6 @@ public class Gangs {
 				numOccupying = biggestLeft.num;
 			}
 			for (int i = 0; i < N - numCows[0]; i++) {
-				if (i == 63) {
-					System.out.println();
-				}
 				for (int j = 1; j < M; j++) {
 					if (numCows[j] == 0) {
 						continue;
