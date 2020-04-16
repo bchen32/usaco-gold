@@ -7,17 +7,17 @@ import java.io.PrintWriter;
 import java.util.LinkedList;
 
 public class Dishwashing {
-	
-	@SuppressWarnings("unchecked")
+
 	public static void main(String[] args) throws IOException {
-		// BufferedReader in = new BufferedReader(new FileReader("C:\\Users\\bench\\git\\USACO-Gold\\Gold\\Dishwashing\\2.in"));
-		// BufferedReader in = new BufferedReader(new FileReader("H:\\git\\USACO-Gold\\Gold\\Dishwashing\\1.in"));
 		BufferedReader in = new BufferedReader(new FileReader("dishes.in"));
 		PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("dishes.out")));
+		in.close();
+		out.close();
 		int N = Integer.parseInt(in.readLine());
 		int[] plates = new int[N];
 		int[] placeStack = new int[N + 1];
 		// placeStack[i] is the index of the soapy stack which i should be placed in
+		@SuppressWarnings("unchecked")
 		LinkedList<Integer>[] soapy = new LinkedList[N + 1];
 		int maxPlaced = -1;
 		for (int i = 0; i < N; i++) {
@@ -25,7 +25,7 @@ public class Dishwashing {
 			soapy[i] = new LinkedList<Integer>();
 		}
 		soapy[N] = new LinkedList<Integer>();
-		int i;
+		int i = 0;
 		for (i = 0; i < N; i++) {
 			int toPlace = plates[i];
 			if (toPlace < maxPlaced) {
@@ -42,7 +42,7 @@ public class Dishwashing {
 			curr.add(toPlace);
 		}
 		out.println(i);
-		out.close();
 		in.close();
+		out.close();
 	}
 }
