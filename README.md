@@ -1,6 +1,24 @@
 # USACO-Gold
 Explanations for Gold Problems
 
+
+
+US Open 2021
+
+Portals
+9/12 cases w 3 timeouts
+Turned it into a graph and used a Disjoint Set. Could probably full pass with a few optimizations.
+
+UCFJ
+8/20 cases w 12 timeouts
+Just went for the brute force N^2 solution to get the first 8 cases. Considered DP but couldn't really figure out how to make that work.
+
+December 2021
+
+Replication
+5/20 cases w 5 timeouts and 15 memory exceeded/runtime error
+Pretty much simulated the problem in about N^3. Couldn't figure out how to optimize.
+
 Angry
 N <= 50,000
 Max Radius = 1,000,000,000
